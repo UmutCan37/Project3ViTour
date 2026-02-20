@@ -31,10 +31,10 @@ namespace Project3ViTour.Services.TourService
             await _tourCollection.DeleteOneAsync(x => x.TourId == id);
         }
 
-        public Task<List<ResultTourDto>> GetAllToursAsync()
+        public async Task<List<ResultTourDto>> GetAllToursAsync()
         {
-            var values = _tourCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<Task<List<ResultTourDto>>>(values);
+            var values =await _tourCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultTourDto>>(values);
         }
 
         public async Task<GetTourByIdDto> GetTourByIdAsync(string id)

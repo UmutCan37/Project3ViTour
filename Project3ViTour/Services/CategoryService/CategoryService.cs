@@ -34,10 +34,10 @@ namespace Project3ViTour.Services.CategoryService
             return _mapper.Map<List<ResultCategoryDto>>(values);
         }
 
-        public Task<GetCatgoryByIdDto> GetCategoryByIdAsync(string id)
+        public async Task<GetCatgoryByIdDto> GetCategoryByIdAsync(string id)
         {
-            var value = _categoryCollection.Find(x => x.CategoryId == id).FirstOrDefault();
-            return _mapper.Map<Task<GetCatgoryByIdDto>>(value);
+            var value =await _categoryCollection.Find(x => x.CategoryId == id).FirstOrDefaultAsync();
+            return _mapper.Map<GetCatgoryByIdDto>(value);
         }
 
         public async Task UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)

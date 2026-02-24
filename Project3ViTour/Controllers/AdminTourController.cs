@@ -34,7 +34,17 @@ namespace Project3ViTour.Controllers
             await _tourService.DeleteTourAsync(id);
             return RedirectToAction("TourList");
         }
-        
-
+        [HttpGet]
+        public async Task<IActionResult> UpdateTour(string id)
+        {
+            var value = await _tourService.GetTourByIdAsync(id);
+            return View(value);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateTour(UpdateTourDto updateTourDto)
+        {
+            await _tourService.UpdateTourAsync(updateTourDto);
+            return RedirectToAction("TourList");
+        }
     }
 }

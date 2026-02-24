@@ -13,7 +13,7 @@ namespace Project3ViTour.Entities
         public string CoverImageUrl { get; set; }
         public string Badge { get; set; }
         public int DayCount { get; set; }
-        public int CapaCity { get; set; }
+        public int Capacity { get; set; }
         public decimal Price { get; set; }
         public bool IsStatus { get; set; }
     }

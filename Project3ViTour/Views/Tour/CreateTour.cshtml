@@ -892,7 +892,7 @@
 
                             <!-- Capacity -->
                             <div class="col-sm-4">
-                                <label asp-for="CapaCity" class="form-label">
+                                <label asp-for="Capacity" class="form-label">
                                     Maksimum Kapasite <span class="req">*</span>
                                 </label>
                                 <div class="spinner-group">
@@ -900,7 +900,7 @@
                                             onclick="spinField('Capacity', -1)">
                                         &#8722;
                                     </button>
-                                    <input asp-for="CapaCity"
+                                    <input asp-for="Capacity"
                                            type="number"
                                            class="spinner-input"
                                            min="1" max="500"
@@ -910,7 +910,7 @@
                                         &#43;
                                     </button>
                                 </div>
-                                <span asp-validation-for="CapaCity" class="text-danger"></span>
+                                <span asp-validation-for="Capacity" class="text-danger"></span>
                                 <p class="form-hint">1 – 500 kişi</p>
                             </div>
 

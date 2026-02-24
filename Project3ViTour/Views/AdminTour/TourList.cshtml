@@ -728,7 +728,7 @@
                             <td>
                                 <span class="stat-pill">
                                     <i class="bi bi-people-fill"></i>
-                                    @tour.CapaCity
+                                    @tour.Capacity
                                 </span>
                             </td>
 
@@ -826,7 +826,7 @@
 
         function openDeleteModal(tourId, tourName) {
             document.getElementById('deleteTourName').textContent = tourName;
-            document.getElementById('deleteConfirmBtn').href = '/admin/tours/delete/' + tourId;
+            document.getElementById('deleteConfirmBtn').href = '/admintour/deletetour/' + tourId;
             deleteModal.show();
         }
 

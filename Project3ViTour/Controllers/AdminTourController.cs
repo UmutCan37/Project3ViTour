@@ -29,6 +29,12 @@ namespace Project3ViTour.Controllers
             await _tourService.CreateTourAsync(createDtoTour);
             return RedirectToAction("TourList");
         }
+        public async Task<IActionResult> DeleteTour(string id)
+        {
+            await _tourService.DeleteTourAsync(id);
+            return RedirectToAction("TourList");
+        }
         
+
     }
 }

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+
+  <data name="Nav_Home" xml:space="preserve"><value>Ana Sayfa</value></data>
+  <data name="Nav_CultureTours" xml:space="preserve"><value>Kültür Turları</value></data>
+  <data name="Nav_VisaFreeTours" xml:space="preserve"><value>Vizesiz Turlar</value></data>
+  <data name="Nav_CyprusTours" xml:space="preserve"><value>Kıbrıs Turları</value></data>
+  <data name="Nav_Guides" xml:space="preserve"><value>Rehberlerimiz</value></data>
+  <data name="Nav_Contact" xml:space="preserve"><value>Bize Yazın</value></data>
+  <data name="Nav_Login" xml:space="preserve"><value>Giriş Yap</value></data>
+  <data name="Nav_Booking" xml:space="preserve"><value>Rezervasyon Yap</value></data>
+  <data name="Nav_Follow" xml:space="preserve"><value>Bizi Takip Edin</value></data>
+  <data name="Nav_Search" xml:space="preserve"><value>Aranacak kelime</value></data>
+  <data name="Footer_Description" xml:space="preserve"><value>Dünyayı keşfetmeniz için güvenli, konforlu ve profesyonel tur hizmetleri sunuyoruz.</value></data>
+  <data name="Footer_Corporate" xml:space="preserve"><value>Kurumsal</value></data>
+  <data name="Footer_About" xml:space="preserve"><value>Hakkımızda</value></data>
+  <data name="Footer_Gallery" xml:space="preserve"><value>Galeri</value></data>
+  <data name="Footer_Team" xml:space="preserve"><value>Ekibimiz</value></data>
+  <data name="Footer_Blog" xml:space="preserve"><value>Blog Yazıları</value></data>
+  <data name="Footer_Contact" xml:space="preserve"><value>İletişim</value></data>
+  <data name="Footer_Newsletter" xml:space="preserve"><value>Bülten Aboneliği</value></data>
+  <data name="Footer_EmailPlaceholder" xml:space="preserve"><value>E-posta Adresinizi Giriniz</value></data>
+  <data name="Footer_TermsAccept" xml:space="preserve"><value>Tüm şartlar ve gizlilik politikamızı kabul ediyorum</value></data>
+  <data name="Footer_Copyright" xml:space="preserve"><value>Tüm hakları saklıdır.</value></data>
+  <data name="Breadcrumb_Home" xml:space="preserve"><value>Anasayfa</value></data>
+  <data name="Breadcrumb_Tours" xml:space="preserve"><value>Güncel Turlar</value></data>
+  <data name="Breadcrumb_TourPackages" xml:space="preserve"><value>Tur Paketleri</value></data>
+  <data name="Search_Locations" xml:space="preserve"><value>Lokasyonlar</value></data>
+  <data name="Search_Type" xml:space="preserve"><value>Tur Tipi</value></data>
+  <data name="Search_Duration" xml:space="preserve"><value>Süre</value></data>
+  <data name="Search_Guests" xml:space="preserve"><value>Misafirler</value></data>
+  <data name="Search_Button" xml:space="preserve"><value>Ara</value></data>
+  <data name="Search_FilterByPrice" xml:space="preserve"><value>Fiyata Göre Filtrele</value></data>
+  <data name="Search_Price" xml:space="preserve"><value>Fiyat</value></data>
+  <data name="Search_Language" xml:space="preserve"><value>Dil</value></data>
+  <data name="Search_Month" xml:space="preserve"><value>Ay</value></data>
+  <data name="Search_AcceptsCards" xml:space="preserve"><value>Kredi Kartı Kabul</value></data>
+  <data name="Search_CarParking" xml:space="preserve"><value>Otopark</value></data>
+  <data name="Search_FreeCoupons" xml:space="preserve"><value>Ücretsiz Kupon</value></data>
+  <data name="Search_Laundry" xml:space="preserve"><value>Çamaşır Hizmeti</value></data>
+  <data name="Search_OutdoorSeating" xml:space="preserve"><value>Açık Alan Oturma</value></data>
+  <data name="Search_Reservations" xml:space="preserve"><value>Rezervasyon</value></data>
+  <data name="Search_Restaurant" xml:space="preserve"><value>Restoran</value></data>
+  <data name="Search_Smoking" xml:space="preserve"><value>Sigara İzni</value></data>
+  <data name="TourList_Showing" xml:space="preserve"><value>Gösteriliyor</value></data>
+  <data name="TourList_Results" xml:space="preserve"><value>Sonuç</value></data>
+  <data name="TourList_Featured" xml:space="preserve"><value>Öne Çıkan</value></data>
+  <data name="TourList_Reviews" xml:space="preserve"><value>Değerlendirme</value></data>
+  <data name="TourList_Price" xml:space="preserve"><value>Fiyat</value></data>
+  <data name="Detail_Information" xml:space="preserve"><value>Bilgi</value></data>
+  <data name="Detail_TourPlanning" xml:space="preserve"><value>Tur Planı</value></data>
+  <data name="Detail_Location" xml:space="preserve"><value>Konum</value></data>
+  <data name="Detail_Reviews" xml:space="preserve"><value>Değerlendirmeler</value></data>
+  <data name="Detail_Gallery" xml:space="preserve"><value>Galeri</value></data>
+  <data name="Detail_MaxGuests" xml:space="preserve"><value>Maks. Misafir</value></data>
+  <data name="Detail_Days" xml:space="preserve"><value>Gün</value></data>
+  <data name="Detail_BookTour" xml:space="preserve"><value>Turu Rezerve Et</value></data>
+  <data name="Detail_ProceedBooking" xml:space="preserve"><value>Rezervasyona Devam Et</value></data>
+  <data name="Detail_BookWithConfidence" xml:space="preserve"><value>Güvenle Rezervasyon</value></data>
+  <data name="Detail_CustomerCare" xml:space="preserve"><value>7/24 Müşteri Desteği</value></data>
+  <data name="Detail_HandpickedTours" xml:space="preserve"><value>Özenle Seçilmiş Turlar</value></data>
+  <data name="Detail_FreeInsurance" xml:space="preserve"><value>Ücretsiz Seyahat Sigortası</value></data>
+  <data name="Detail_BestPrice" xml:space="preserve"><value>En İyi Fiyat Garantisi</value></data>
+  <data name="Detail_Description" xml:space="preserve"><value>Açıklama</value></data>
+  <data name="Detail_TourPlan" xml:space="preserve"><value>Tur Planı</value></data>
+  <data name="Detail_LeaveComment" xml:space="preserve"><value>Yorum Yap</value></data>
+  <data name="Detail_PostComment" xml:space="preserve"><value>Yorum Gönder</value></data>
+  <data name="Detail_CustomerReviews" xml:space="preserve"><value>Müşteri Değerlendirmeleri</value></data>
+  <data name="Detail_ClientReviews" xml:space="preserve"><value>Müşteri Yorumları</value></data>
+  <data name="Detail_OverallRating" xml:space="preserve"><value>Genel Puan</value></data>
+  <data name="Detail_OutOf5" xml:space="preserve"><value>5 üzerinden</value></data>
+  <data name="Booking_Title" xml:space="preserve"><value>Turunuzu Rezerve Edin</value></data>
+  <data name="Booking_Subtitle" xml:space="preserve"><value>Aşağıdaki formu doldurarak rezervasyonunuzu tamamlayın.</value></data>
+  <data name="Booking_SelectTour" xml:space="preserve"><value>Tur Seçin</value></data>
+  <data name="Booking_SelectTourPlaceholder" xml:space="preserve"><value>-- Tur Seçiniz --</value></data>
+  <data name="Booking_NameSurname" xml:space="preserve"><value>Ad Soyad</value></data>
+  <data name="Booking_Email" xml:space="preserve"><value>E-posta</value></data>
+  <data name="Booking_Phone" xml:space="preserve"><value>Telefon</value></data>
+  <data name="Booking_GuestCount" xml:space="preserve"><value>Kişi Sayısı</value></data>
+  <data name="Booking_Date" xml:space="preserve"><value>Tur Tarihi</value></data>
+  <data name="Booking_Notes" xml:space="preserve"><value>Notlar</value></data>
+  <data name="Booking_TermsAccept" xml:space="preserve"><value>Kullanım Şartları ve Gizlilik Politikası'nı kabul ediyorum.</value></data>
+  <data name="Booking_Submit" xml:space="preserve"><value>Rezervasyonu Tamamla</value></data>
+  <data name="Booking_CancelPolicy" xml:space="preserve"><value>İptal Politikası</value></data>
+  <data name="Booking_PricePerPerson" xml:space="preserve"><value>Kişi Başı Fiyat</value></data>
+  <data name="Booking_Total" xml:space="preserve"><value>Toplam Tutar</value></data>
+</root>

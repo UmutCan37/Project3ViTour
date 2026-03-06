@@ -1,0 +1,730 @@
+﻿@using Project3ViTour.Dtos.BookingDtos
+@model List<ResultBookingDto>
+@{
+    ViewData["Title"] = "Rezervasyonlar";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --green: #2ecc71;
+            --green-dk: #27ae60;
+            --green-lt: #eafaf1;
+            --green-mid: #d5f5e3;
+            --green-glow: rgba(46,204,113,.18);
+            --surface: #f7fdf9;
+            --border: #e3f2e9;
+            --text-main: #1a2e1a;
+            --text-muted: #7a9c7a;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --white: #ffffff;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .page-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--green-dk);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .page-eyebrow::before {
+                content: '';
+                display: inline-block;
+                width: 18px;
+                height: 2px;
+                background: var(--green);
+                border-radius: 2px;
+            }
+
+        .page-title {
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            color: #1a2e1a;
+        }
+
+        .btn-add {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--green), var(--green-dk));
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(46,204,113,.35);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-add:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(46,204,113,.45);
+                color: #fff;
+            }
+
+        /* Stats */
+        .stats-row {
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 12px rgba(46,204,113,.07);
+            transition: all .2s;
+        }
+
+            .stat-card:hover {
+                box-shadow: 0 6px 24px rgba(46,204,113,.15);
+                transform: translateY(-2px);
+            }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .si-green {
+            background: var(--green-mid);
+            color: var(--green-dk);
+        }
+
+        .si-teal {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .si-lime {
+            background: #ecfccb;
+            color: #4d7c0f;
+        }
+
+        .si-emerald {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .stat-num {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            color: #1a2e1a;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .stat-lbl {
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: 0 2px 12px rgba(46,204,113,.06);
+        }
+
+        .filter-search {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+            max-width: 360px;
+        }
+
+            .filter-search i {
+                position: absolute;
+                left: 13px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                font-size: 14px;
+                pointer-events: none;
+            }
+
+            .filter-search input {
+                width: 100%;
+                padding: 10px 14px 10px 38px;
+                border: 1.5px solid var(--border);
+                border-radius: 10px;
+                background: var(--surface);
+                font-size: 13.5px;
+                color: var(--text-main);
+                outline: none;
+                transition: all .15s;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+
+                .filter-search input:focus {
+                    border-color: var(--green);
+                    box-shadow: 0 0 0 3px var(--green-glow);
+                    background: #fff;
+                }
+
+        .filter-select {
+            padding: 10px 36px 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            font-size: 13.5px;
+            color: var(--text-main);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a9c7a'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            outline: none;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .filter-select:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px var(--green-glow);
+            }
+
+        .filter-count {
+            margin-left: auto;
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Table */
+        .table-card {
+            background: var(--white);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(46,204,113,.08);
+            overflow: hidden;
+            border: 1.5px solid var(--border);
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .bookings-table thead th {
+                background: linear-gradient(135deg, var(--green-lt), #f0fff4);
+                padding: 14px 16px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: var(--text-muted);
+                border-bottom: 1.5px solid var(--border);
+                white-space: nowrap;
+            }
+
+            .bookings-table tbody tr {
+                border-bottom: 1px solid #f0fdf4;
+                transition: background .14s;
+            }
+
+                .bookings-table tbody tr:last-child {
+                    border-bottom: none;
+                }
+
+                .bookings-table tbody tr:hover {
+                    background: #f7fdf9;
+                }
+
+            .bookings-table td {
+                padding: 14px 16px;
+                vertical-align: middle;
+                font-size: 13.5px;
+            }
+
+        /* Customer cell */
+        .customer-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--green), var(--green-dk));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(46,204,113,.3);
+        }
+
+        .customer-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a2e1a;
+        }
+
+        .customer-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Pills */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 20px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+            .pill i {
+                color: var(--green);
+                font-size: 12px;
+            }
+
+            .pill code {
+                font-size: 12px;
+                color: #1a2e1a;
+                background: transparent;
+                padding: 0;
+                font-weight: 700;
+            }
+
+        .pill-price {
+            border-color: var(--green-mid);
+            background: var(--green-lt);
+        }
+
+            .pill-price i {
+                color: var(--green-dk);
+            }
+
+            .pill-price code {
+                color: var(--green-dk);
+            }
+
+        /* Status badges */
+        .badge-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: var(--green-mid);
+            color: var(--green-dk);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+            .badge-active::before {
+                content: '';
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--green);
+            }
+
+        .badge-passive {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+            .badge-passive::before {
+                content: '';
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #94a3b8;
+            }
+
+        /* Tour ID pill */
+        .tour-id-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: var(--green-lt);
+            border: 1.5px solid var(--green-mid);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--green-dk);
+            white-space: nowrap;
+        }
+
+        /* Action Buttons */
+        .action-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 13px;
+            border-radius: 10px;
+            border: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+            white-space: nowrap;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-action:hover {
+                transform: translateY(-1px);
+            }
+
+        .btn-edit {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+            .btn-edit:hover {
+                background: #fef08a;
+            }
+
+        .btn-status {
+            background: var(--green-lt);
+            color: var(--green-dk);
+        }
+
+            .btn-status:hover {
+                background: var(--green-mid);
+            }
+
+        .btn-pdf {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+            .btn-pdf:hover {
+                background: #fecaca;
+            }
+
+        .btn-delete {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+            .btn-delete:hover {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+        }
+
+        .empty-icon {
+            font-size: 52px;
+            color: var(--green-mid);
+            margin-bottom: 14px;
+        }
+
+        .empty-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            font-family: 'Fraunces', serif;
+        }
+
+        .empty-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .table-responsive-scroll {
+            overflow-x: auto;
+        }
+
+        @@keyframes rowSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bookings-table tbody tr {
+            animation: rowSlide .3s ease both;
+        }
+
+            .bookings-table tbody tr:nth-child(1) {
+                animation-delay: .04s;
+            }
+
+            .bookings-table tbody tr:nth-child(2) {
+                animation-delay: .08s;
+            }
+
+            .bookings-table tbody tr:nth-child(3) {
+                animation-delay: .12s;
+            }
+
+            .bookings-table tbody tr:nth-child(4) {
+                animation-delay: .16s;
+            }
+
+            .bookings-table tbody tr:nth-child(5) {
+                animation-delay: .20s;
+            }
+    </style>
+}
+
+<!-- PAGE HEADER -->
+<div class="section-header">
+    <div>
+        <p class="page-eyebrow">Yönetim</p>
+        <h1 class="page-title">Rezervasyonlar</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-muted">Dashboard</a></li>
+                <li class="breadcrumb-item active text-muted">Rezervasyonlar</li>
+            </ol>
+        </nav>
+    </div>
+    <a asp-controller="Booking" asp-action="CreateBooking" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Rezervasyon
+    </a>
+</div>
+
+<!-- STATS -->
+@if (Model != null)
+{
+    int total = Model.Count;
+    int active = Model.Count(x => x.IsStatus);
+    int passive = Model.Count(x => !x.IsStatus);
+    decimal totalRev = Model.Sum(x => x.TotalPrice);
+
+    <div class="row stats-row g-3">
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon si-teal"><i class="bi bi-calendar2-check-fill"></i></div>
+                <div><div class="stat-num">@total</div><div class="stat-lbl">Toplam</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon si-green"><i class="bi bi-check-circle-fill"></i></div>
+                <div><div class="stat-num">@active</div><div class="stat-lbl">Aktif</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon si-lime"><i class="bi bi-pause-circle-fill"></i></div>
+                <div><div class="stat-num">@passive</div><div class="stat-lbl">Pasif</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon si-emerald"><i class="bi bi-cash-stack"></i></div>
+                <div><div class="stat-num">₺@totalRev.ToString("N0")</div><div class="stat-lbl">Toplam Gelir</div></div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <div class="filter-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="tableSearch" placeholder="Ad, email, telefon ara…" autocomplete="off" />
+    </div>
+    <select class="filter-select" id="statusFilter">
+        <option value="">Tüm Durumlar</option>
+        <option value="active">Aktif</option>
+        <option value="passive">Pasif</option>
+    </select>
+    <span class="filter-count">
+        <strong id="visibleCount">@(Model?.Count ?? 0)</strong> / <strong>@(Model?.Count ?? 0)</strong> rezervasyon
+    </span>
+</div>
+
+<!-- TABLE -->
+<div class="table-card">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+            <div class="empty-title">Henüz rezervasyon yok</div>
+            <p class="empty-sub">İlk rezervasyonu ekleyerek başlayın.</p>
+            <a asp-controller="Booking" asp-action="CreateBooking" class="btn-add mt-3" style="display:inline-flex;">
+                <i class="bi bi-plus-lg"></i> Rezervasyon Ekle
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive-scroll">
+            <table class="bookings-table" id="bookingTable">
+                <thead>
+                    <tr>
+                        <th>Müşteri</th>
+                        <th>Misafir</th>
+                        <th>Tarih</th>
+                        <th>Toplam</th>
+                        <th>Durum</th>
+                        <th>Tur</th>
+                        <th style="text-align:right;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingBody">
+                    @foreach (var item in Model.OrderByDescending(x => x.BookingDate))
+                    {
+                        string initials = string.Join("", (item.NameSurname ?? "?").Split(' ').Take(2).Select(w => w.FirstOrDefault().ToString().ToUpper()));
+                        string statusVal = item.IsStatus ? "active" : "passive";
+
+                        <tr class="data-row" data-status="@statusVal"
+                            data-search="@($"{item.NameSurname} {item.Email} {item.Phone}".ToLower())">
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="customer-avatar">@initials</div>
+                                    <div>
+                                        <div class="customer-name">@item.NameSurname</div>
+                                        <div class="customer-meta">@item.Email</div>
+                                        <div class="customer-meta">@item.Phone</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="pill"><i class="bi bi-people-fill"></i><code>@item.GuestCount kişi</code></span>
+                            </td>
+                            <td>
+                                <span class="pill"><i class="bi bi-calendar3"></i><code>@item.BookingDate.ToString("dd MMM yyyy")</code></span>
+                            </td>
+                            <td>
+                                <span class="pill pill-price"><i class="bi bi-tag-fill"></i><code>₺@item.TotalPrice.ToString("N0")</code></span>
+                            </td>
+                            <td>
+                                @if (item.IsStatus)
+                                {
+                                    <span class="badge-active">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-passive">Pasif</span>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var tourList = ViewBag.Tours as List<Project3ViTour.Dtos.TourDtos.ResultTourDto>;
+                                    var tourName = tourList?.FirstOrDefault(t => t.TourId == item.TourId)?.Title ?? item.TourId;
+                                }
+                                <span class="tour-id-pill" title="@item.TourId">
+                                    <i class="bi bi-map-fill"></i>@tourName
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-group">
+                                    <a class="btn-action btn-edit"
+                                       asp-controller="Booking" asp-action="UpdateBooking" asp-route-id="@item.BookingId">
+                                        <i class="bi bi-pencil-fill"></i> Düzenle
+                                    </a>
+                                    <a class="btn-action btn-status"
+                                       asp-controller="Booking" asp-action="ToggleStatus" asp-route-id="@item.BookingId">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </a>
+                                    <a href="/Booking/ExportTourBookingsPdf/@item.TourId" class="btn-action btn-pdf">
+                                        <i class="bi bi-file-earmark-pdf-fill"></i> PDF
+                                    </a>
+                                    <a class="btn-action btn-delete"
+                                       asp-controller="Booking" asp-action="DeleteBooking" asp-route-id="@item.BookingId"
+                                       onclick="return confirm('Bu rezervasyonu silmek istediğine emin misin?')">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        const searchInput  = document.getElementById('tableSearch');
+        const statusFilter = document.getElementById('statusFilter');
+        const visibleCount = document.getElementById('visibleCount');
+        const tbody        = document.getElementById('bookingBody');
+
+        function applyFilters() {
+            if (!tbody) return;
+            const q      = searchInput?.value.toLowerCase().trim() ?? '';
+            const status = statusFilter?.value ?? '';
+            const rows   = tbody.querySelectorAll('tr.data-row');
+            let visible  = 0;
+
+            rows.forEach(row => {
+                const matchSearch = !q      || (row.dataset.search || '').includes(q);
+                const matchStatus = !status || row.dataset.status === status;
+                row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+                if (matchSearch && matchStatus) visible++;
+            });
+
+            if (visibleCount) visibleCount.textContent = visible;
+        }
+
+        searchInput?.addEventListener('input', applyFilters);
+        statusFilter?.addEventListener('change', applyFilters);
+    </script>
+}

@@ -1,0 +1,530 @@
+﻿@model Project3ViTour.Dtos.BookingDtos.GetBookingByIdDto
+@{
+    ViewData["Title"] = "Rezervasyon Güncelle";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --green: #2ecc71;
+            --green-dk: #27ae60;
+            --green-lt: #eafaf1;
+            --green-mid: #d5f5e3;
+            --green-glow: rgba(46,204,113,.18);
+            --surface: #f7fdf9;
+            --border: #e3f2e9;
+            --text-main: #1a2e1a;
+            --text-muted: #7a9c7a;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --white: #ffffff;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .page-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--warning);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .page-eyebrow::before {
+                content: '';
+                display: inline-block;
+                width: 18px;
+                height: 2px;
+                background: var(--warning);
+                border-radius: 2px;
+            }
+
+        .page-title {
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            color: #1a2e1a;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all .2s;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-back:hover {
+                background: var(--green-lt);
+                color: var(--green-dk);
+                border-color: var(--green);
+            }
+
+        /* Edit Banner */
+        .edit-banner {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1.5px solid #fde68a;
+            border-radius: 16px;
+            padding: 16px 22px;
+            margin-bottom: 24px;
+        }
+
+        .edit-banner-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(245,158,11,.35);
+        }
+
+        .edit-banner-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .edit-banner-sub {
+            font-size: 12px;
+            color: #b45309;
+        }
+
+        .edit-banner-id {
+            font-size: 11px;
+            font-weight: 600;
+            color: #92400e;
+            background: rgba(245,158,11,.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-family: monospace;
+            white-space: nowrap;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(46,204,113,.07);
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: box-shadow .2s;
+        }
+
+            .form-card:hover {
+                box-shadow: 0 4px 24px rgba(46,204,113,.13);
+            }
+
+        .form-card-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 18px 24px;
+            border-bottom: 1.5px solid var(--border);
+            background: linear-gradient(135deg, #fffbeb, #fef9c3);
+        }
+
+        .form-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .fci-amber {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .fci-teal {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .fci-green {
+            background: var(--green-mid);
+            color: var(--green-dk);
+        }
+
+        .form-card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a2e1a;
+            margin: 0;
+        }
+
+        .form-card-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .form-card-body {
+            padding: 26px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1.5px solid #fde68a;
+        }
+
+        .form-label-custom {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 7px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 15px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--white);
+            font-size: 13.5px;
+            color: var(--text-main);
+            outline: none;
+            transition: all .2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .form-control-custom.no-icon {
+                padding-left: 14px;
+            }
+
+            .form-control-custom:focus {
+                border-color: var(--warning);
+                box-shadow: 0 0 0 3px rgba(245,158,11,.15);
+                background: #fffdf5;
+            }
+
+        select.form-control-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a9c7a'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .btn-submit-update {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 30px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            border: none;
+            border-radius: 13px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 16px rgba(245,158,11,.35);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-submit-update:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(245,158,11,.45);
+            }
+
+        .btn-cancel {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            background: none;
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+            border-radius: 13px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all .15s;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-cancel:hover {
+                background: var(--green-lt);
+                color: var(--green-dk);
+                border-color: var(--green);
+            }
+
+        /* Summary card */
+        .summary-item {
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            margin-bottom: 10px;
+            transition: all .2s;
+        }
+
+            .summary-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .summary-item:hover {
+                border-color: var(--green);
+                background: var(--green-lt);
+            }
+
+        .summary-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1a2e1a;
+            word-break: break-all;
+        }
+    </style>
+}
+
+<!-- PAGE HEADER -->
+<div class="section-header">
+    <div>
+        <p class="page-eyebrow">Rezervasyon Yönetimi</p>
+        <h1 class="page-title">Rezervasyon Güncelle</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-muted">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/Booking/Index" class="text-muted">Rezervasyonlar</a></li>
+                <li class="breadcrumb-item active text-muted">Güncelle</li>
+            </ol>
+        </nav>
+    </div>
+    <a href="/Booking/Index" class="btn-back"><i class="bi bi-arrow-left"></i> Geri Dön</a>
+</div>
+
+<!-- EDIT BANNER -->
+<div class="edit-banner">
+    <div class="edit-banner-icon"><i class="bi bi-pencil-fill"></i></div>
+    <div class="flex-1">
+        <div class="edit-banner-title">Düzenleme Modu — @Model.NameSurname</div>
+        <div class="edit-banner-sub">Değişiklikler kaydedilene kadar uygulanmaz.</div>
+    </div>
+    <span class="edit-banner-id d-none d-sm-block">ID: @Model.BookingId</span>
+</div>
+
+<div class="row g-4">
+    <!-- FORM -->
+    <div class="col-lg-8">
+        <div class="form-card">
+            <div class="form-card-header">
+                <div class="form-card-icon fci-amber"><i class="bi bi-pencil-fill"></i></div>
+                <div>
+                    <p class="form-card-title">Rezervasyon Bilgilerini Düzenle</p>
+                    <p class="form-card-subtitle">Mevcut rezervasyonu güncelle</p>
+                </div>
+            </div>
+            <div class="form-card-body">
+                <form asp-action="UpdateBooking" asp-controller="Booking" method="post">
+                    <input asp-for="BookingId" type="hidden" />
+
+                    <!-- Müşteri -->
+                    <div class="section-label"><i class="bi bi-person-fill"></i> Müşteri Bilgileri</div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Ad Soyad</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-person-fill input-icon"></i>
+                                <input asp-for="NameSurname" class="form-control-custom" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">E-posta</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-envelope-fill input-icon"></i>
+                                <input asp-for="Email" class="form-control-custom" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Telefon</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-telephone-fill input-icon"></i>
+                                <input asp-for="Phone" class="form-control-custom" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Misafir Sayısı</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-people-fill input-icon"></i>
+                                <input asp-for="GuestCount" type="number" class="form-control-custom" min="1" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rezervasyon -->
+                    <div class="section-label"><i class="bi bi-calendar2-check-fill"></i> Rezervasyon Detayları</div>
+                    <div class="row g-3 mb-5">
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Tarih</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-calendar-fill input-icon"></i>
+                                <input asp-for="BookingDate" type="date" class="form-control-custom" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Toplam Tutar (₺)</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-tag-fill input-icon"></i>
+                                <input asp-for="TotalPrice" type="number" step="0.01" class="form-control-custom" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Tur Seç <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-map-fill input-icon"></i>
+                                <select asp-for="TourId" class="form-control-custom" style="padding-left:40px; appearance:none;">
+                                    <option value="">— Tur seçin —</option>
+                                    @if (ViewBag.Tours != null)
+                                    {
+                                        foreach (var t in (ViewBag.Tours as List<Project3ViTour.Dtos.TourDtos.ResultTourDto>))
+                                        {
+                                            if (t.TourId == Model.TourId)
+                                            {
+                                                <option value="@t.TourId" selected>@t.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@t.TourId">@t.Title</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Durum</label>
+                            <select asp-for="IsStatus" class="form-control-custom no-icon">
+                                <option value="true">✅ Aktif</option>
+                                <option value="false">⏸ Pasif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn-submit-update">
+                            <i class="bi bi-arrow-clockwise"></i> Değişiklikleri Kaydet
+                        </button>
+                        <a href="/Booking/Index" class="btn-cancel">
+                            <i class="bi bi-x-circle"></i> İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="col-lg-4">
+        <div class="form-card">
+            <div class="form-card-header" style="background: linear-gradient(135deg, var(--green-lt), #f0fff4);">
+                <div class="form-card-icon fci-teal"><i class="bi bi-receipt-cutoff"></i></div>
+                <div>
+                    <p class="form-card-title">Rezervasyon Özeti</p>
+                    <p class="form-card-subtitle">Mevcut bilgiler</p>
+                </div>
+            </div>
+            <div class="form-card-body">
+                <div class="summary-item">
+                    <div class="summary-label">Rezervasyon ID</div>
+                    <div class="summary-value" style="font-family:monospace; font-size:12px;">@Model.BookingId</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Mevcut Durum</div>
+                    <div class="summary-value">
+                        @if (Model.IsStatus)
+                        {
+                            <span style="color:var(--green-dk);"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                        }
+                        else
+                        {
+                            <span style="color:#64748b;"><i class="bi bi-pause-circle-fill me-1"></i>Pasif</span>
+                        }
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Misafir</div>
+                    <div class="summary-value"><i class="bi bi-people-fill me-1" style="color:var(--green);"></i>@Model.GuestCount kişi</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Toplam Tutar</div>
+                    <div class="summary-value" style="color:var(--green-dk); font-size:18px;">₺@Model.TotalPrice.ToString("N0")</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Tur</div>
+                    <div class="summary-value">
+                        @{
+                            var tourListSidebar = ViewBag.Tours as List<Project3ViTour.Dtos.TourDtos.ResultTourDto>;
+                            var selectedTour = tourListSidebar?.FirstOrDefault(t => t.TourId == Model.TourId);
+                        }
+                        <i class="bi bi-map-fill me-1" style="color:var(--green);"></i>@(selectedTour?.Title ?? Model.TourId)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

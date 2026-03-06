@@ -9,5 +9,13 @@ namespace Project3ViTour.Services.ReviewService
         Task UpdateReviewAsync(UpdateReviewDto updateReviewDto);
         Task DeleteReviewAsync(string id);
         Task<GetReviewByIdDto> GetReviewByIdAsync(string id);
+
+        Task<List<ResultReviewByTourIdDto>> GetAllReviewsByTourIdAsync(string id);
+        Task<int> GetReviewCountAsync();
+
+        Task<List<ResultReviewDto>> GetLastReviewsAsync(int count);
+
+        Task<double> GetAverageRatingAsync();
+
     }
 }

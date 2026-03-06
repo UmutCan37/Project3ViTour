@@ -1,0 +1,167 @@
+﻿@model CreateTourPlanningDto
+@{
+    ViewData["Title"] = "Gün Planı Ekle";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .loc-input, .loc-textarea {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .loc-input:focus, .loc-textarea:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                background: #fff;
+                outline: none;
+            }
+
+        .loc-textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .form-select:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                outline: none;
+            }
+    </style>
+}
+
+<div class="page-header">
+    <h1 class="page-title">Gün Planı Ekle</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="TourPlanning" asp-action="Index" style="color:var(--green);">Tur Planları</a></li>
+            <li class="breadcrumb-item active">Ekle</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:40px;height:40px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-journal-plus" style="color:var(--green);font-size:17px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight:700;color:var(--dark);">Gün Planı Bilgileri</div>
+                        <div style="font-size:12px;color:var(--text-muted);">DayNumber sıralama için önemli</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-controller="TourPlanning" asp-action="CreateTourPlanning" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-sun me-1" style="color:var(--green);"></i> Gün Numarası
+                            </label>
+                            <input asp-for="DayNumber" type="number" min="1" class="form-control loc-input" placeholder="1" />
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-map me-1" style="color:var(--green);"></i> Tur
+                            </label>
+                            @if (ViewBag.Tours != null)
+                            {
+                                <select asp-for="TourId" class="form-select" asp-items="ViewBag.Tours">
+                                    <option value="">— Tur Seç —</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <input asp-for="TourId" class="form-control loc-input" placeholder="TourId" />
+                            }
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-type me-1" style="color:var(--green);"></i> Gün Başlığı
+                            </label>
+                            <input asp-for="DayTitle" class="form-control loc-input" placeholder="örn. Varış & Şehir Turu" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-text-left me-1" style="color:var(--green);"></i> Açıklama
+                            </label>
+                            <textarea asp-for="Description" class="form-control loc-textarea" placeholder="Günün açıklaması..."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-lightning me-1" style="color:var(--green);"></i> Aktiviteler
+                            </label>
+                            <textarea asp-for="Activities" class="form-control loc-textarea" placeholder="Aktiviteler (örn. Transfer, tekne turu, müze...)"></textarea>
+                            <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                                <i class="bi bi-info-circle me-1"></i> Virgülle ayırarak yazabilirsin
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn-green d-flex align-items-center gap-2">
+                            <i class="bi bi-check-lg"></i> Kaydet
+                        </button>
+                        <a asp-controller="TourPlanning" asp-action="Index"
+                           class="btn" style="background:var(--surface);color:var(--text-muted);border-radius:10px;padding:9px 22px;border:1.5px solid var(--border);font-size:14px;font-weight:600;">
+                            İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-info-circle me-2" style="color:var(--green);"></i> İpuçları
+            </div>
+            <div class="card-body p-4">
+                <div style="background:var(--green-lt);border-radius:12px;padding:14px 16px;border:1.5px solid var(--green-mid);">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                                <i class="bi bi-1-circle-fill" style="color:#fff;font-size:12px;"></i>
+                            </div>
+                            <div style="font-size:13px;color:var(--text-main);">Gün numarası <strong>sıralama</strong> için önemlidir. 1'den başlayarak artır.</div>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                                <i class="bi bi-2-circle-fill" style="color:#fff;font-size:12px;"></i>
+                            </div>
+                            <div style="font-size:13px;color:var(--text-main);">Aktiviteleri <strong>virgülle</strong> ayırarak yaz.</div>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                                <i class="bi bi-3-circle-fill" style="color:#fff;font-size:12px;"></i>
+                            </div>
+                            <div style="font-size:13px;color:var(--text-main);">Her gün için ayrı bir plan oluştur.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

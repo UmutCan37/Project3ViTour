@@ -6,5 +6,10 @@
         public string DatabaseName { get; set; }
         public string TourCollectionName { get; set; }
         public string CategoryCollectionName { get; set; }
+        public string ReviewCollectionName { get; set; }
+        public string LocationCollectionName { get; set; }
+        public string GalleryImageCollectionName { get; set; }
+        public string TourPlanningCollectionName { get; set; }
+        public string BookingCollectionName { get; set; }
     }
 }

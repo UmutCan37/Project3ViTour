@@ -1,4 +1,6 @@
-﻿<div class="mt--82 z-index3 relative">
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Project3ViTour.Resources.SharedResource> L
+
+<div class="mt--82 z-index3 relative">
     <div class="tf-container">
         <div class="row">
             <div class="col-lg-12">
@@ -8,27 +10,22 @@
                             <div class="form-group flex">
                                 <i class="icon-18"></i>
                                 <div class="search-bar-group">
-                                    <label>Lokasyonlar</label>
+                                    <label>@L["Search_Locations"]</label>
                                     <div class="nice-select" tabindex="0">
                                         <span class="current">Melborn ,Australia</span>
                                         <ul class="list">
-                                            <li data-value class="option selected">
-                                                Melborn ,Australia
-                                            </li>
+                                            <li data-value class="option selected">Melborn ,Australia</li>
                                             <li data-value="hanoi" class="option">HaNoi ,Vietnam</li>
                                             <li data-value="tolyo" class="option">Tokyo , Janpan</li>
                                             <li data-value="korea" class="option">Seoul , Korea</li>
                                         </ul>
                                     </div>
-
                                 </div>
-
-
                             </div>
                             <div class="form-group flex">
-                                <i class="icon-hiking-1-1 "></i>
+                                <i class="icon-hiking-1-1"></i>
                                 <div class="search-bar-group">
-                                    <label>Type</label>
+                                    <label>@L["Search_Type"]</label>
                                     <div class="nice-select" tabindex="0">
                                         <span class="current">Booking Type</span>
                                         <ul class="list">
@@ -38,15 +35,12 @@
                                             <li data-value="booking" class="option">Booking Type</li>
                                         </ul>
                                     </div>
-
                                 </div>
-
-
                             </div>
                             <div class="form-group flex">
-                                <i class=" icon-time-left "></i>
+                                <i class="icon-time-left"></i>
                                 <div class="search-bar-group">
-                                    <label>Duration</label>
+                                    <label>@L["Search_Duration"]</label>
                                     <div class="nice-select" tabindex="0">
                                         <span class="current">2-4 days tour</span>
                                         <ul class="list">
@@ -56,15 +50,12 @@
                                             <li data-value="booking" class="option">5-10 days tour</li>
                                         </ul>
                                     </div>
-
                                 </div>
-
-
                             </div>
                             <div class="form-group flex">
                                 <i class="icon-user"></i>
                                 <div class="search-bar-group">
-                                    <label>Guests</label>
+                                    <label>@L["Search_Guests"]</label>
                                     <input type="text" value="0">
                                 </div>
                             </div>
@@ -72,14 +63,14 @@
                                 <div class="icon-icon-filter">
                                     <i class="icon-14"></i>
                                 </div>
-                                <a href="#" class="btn-search"><i class="icon-Vector5"></i>Search</a>
+                                <a href="#" class="btn-search"><i class="icon-Vector5"></i>@L["Search_Button"]</a>
                             </div>
                         </div>
                         <div class="wd-search-form">
                             <div class="input-group-grid">
-                                <fieldset class="group-select relative ">
-                                    <label>Filter By Price</label>
-                                    <div class="widget widget-price ">
+                                <fieldset class="group-select relative">
+                                    <label>@L["Search_FilterByPrice"]</label>
+                                    <div class="widget widget-price">
                                         <div id="slider-range"></div>
                                         <div class="slider-labels">
                                             <div>
@@ -87,23 +78,22 @@
                                                 <input type="hidden" name="max-value" value="">
                                             </div>
                                             <div class="caption flex-three">
-                                                <p class="price-range">Price: </p>
+                                                <p class="price-range">@L["Search_Price"]: </p>
                                                 <div class="number-range">
                                                     <span id="slider-range-value1"></span>
                                                     <span id="slider-range-value2"></span>
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div><!-- /.widget_price -->
+                                    </div>
                                 </fieldset>
-                                <fieldset class="group-select relative input-npd ">
+                                <fieldset class="group-select relative input-npd">
                                     <div class="search-bar-group relative">
                                         <label>0</label>
                                         <div class="nice-select" tabindex="0">
-                                            <span class="current">English</span>
+                                            <span class="current">@L["Search_Language"]</span>
                                             <ul class="list">
-                                                <li data-value="" class="option selected focus">Language</li>
+                                                <li data-value="" class="option selected focus">@L["Search_Language"]</li>
                                                 <li data-value="language1" class="option">Japan</li>
                                                 <li data-value="language2" class="option">Vietnames</li>
                                                 <li data-value="language3" class="option">Korea</li>
@@ -111,13 +101,13 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <fieldset class="group-select relative input-npd ">
+                                <fieldset class="group-select relative input-npd">
                                     <div class="search-bar-group relative">
                                         <label>Any</label>
                                         <div class="nice-select" tabindex="0">
-                                            <span class="current">Month</span>
+                                            <span class="current">@L["Search_Month"]</span>
                                             <ul class="list">
-                                                <li data-value="" class="option selected focus">Month</li>
+                                                <li data-value="" class="option selected focus">@L["Search_Month"]</li>
                                                 <li data-value="month1" class="option">1 Month</li>
                                                 <li data-value="month2" class="option">2 Month</li>
                                                 <li data-value="month3" class="option">3 Month</li>
@@ -129,9 +119,9 @@
                                     <div class="search-bar-group relative">
                                         <label>Any</label>
                                         <div class="nice-select" tabindex="0">
-                                            <span class="current">Duration</span>
+                                            <span class="current">@L["Search_Duration"]</span>
                                             <ul class="list">
-                                                <li data-value="" class="option selected focus">Duration</li>
+                                                <li data-value="" class="option selected focus">@L["Search_Duration"]</li>
                                                 <li data-value="duration1" class="option">10-15 day</li>
                                                 <li data-value="duration2" class="option">15-30 day</li>
                                                 <li data-value="duration3" class="option">20-30 day</li>
@@ -142,41 +132,41 @@
                                 <div class="group-check-box-wrap">
                                     <div class="checkbox">
                                         <input id="check4" type="checkbox" name="check" value="check">
-                                        <label for="check4">Accepts Credit Cards</label>
+                                        <label for="check4">@L["Search_AcceptsCards"]</label>
                                     </div>
                                     <div class="checkbox">
                                         <input id="check5" type="checkbox" name="check" value="check">
-                                        <label for="check5">Car Parking</label>
+                                        <label for="check5">@L["Search_CarParking"]</label>
                                     </div>
                                 </div>
                                 <div class="group-check-box-wrap">
                                     <div class="checkbox">
                                         <input id="check6" type="checkbox" name="check" value="check">
-                                        <label for="check6">Free Coupons</label>
+                                        <label for="check6">@L["Search_FreeCoupons"]</label>
                                     </div>
                                     <div class="checkbox">
                                         <input id="check7" type="checkbox" name="check" value="check">
-                                        <label for="check7">Laundry Service</label>
+                                        <label for="check7">@L["Search_Laundry"]</label>
                                     </div>
                                 </div>
                                 <div class="group-check-box-wrap">
                                     <div class="checkbox">
                                         <input id="check8" type="checkbox" name="check" value="check">
-                                        <label for="check8">Outdoor Seating</label>
+                                        <label for="check8">@L["Search_OutdoorSeating"]</label>
                                     </div>
                                     <div class="checkbox">
                                         <input id="check9" type="checkbox" name="check" value="check">
-                                        <label for="check9">Reservations</label>
+                                        <label for="check9">@L["Search_Reservations"]</label>
                                     </div>
                                 </div>
                                 <div class="group-check-box-wrap">
                                     <div class="checkbox">
                                         <input id="check10" type="checkbox" name="check" value="check">
-                                        <label for="check10">Restaurant</label>
+                                        <label for="check10">@L["Search_Restaurant"]</label>
                                     </div>
                                     <div class="checkbox">
                                         <input id="check11" type="checkbox" name="check" value="check">
-                                        <label for="check11">Smoking Allowed</label>
+                                        <label for="check11">@L["Search_Smoking"]</label>
                                     </div>
                                 </div>
                             </div>

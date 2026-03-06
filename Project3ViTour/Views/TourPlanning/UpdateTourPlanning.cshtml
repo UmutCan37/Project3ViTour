@@ -1,0 +1,210 @@
+﻿@model GetTourPlanningByIdDto
+@{
+    ViewData["Title"] = "Gün Planı Düzenle";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .loc-input, .loc-textarea {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .loc-input:focus, .loc-textarea:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                background: #fff;
+                outline: none;
+            }
+
+        .loc-textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .form-select:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                outline: none;
+            }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+            .pill code {
+                font-size: 11.5px;
+                color: var(--green-dk);
+                background: transparent;
+                padding: 0;
+                font-weight: 700;
+            }
+    </style>
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-danger" style="border-radius:12px;">Kayıt bulunamadı.</div>
+    return;
+}
+
+<div class="page-header">
+    <h1 class="page-title">Gün Planı Düzenle</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="TourPlanning" asp-action="Index" style="color:var(--green);">Tur Planları</a></li>
+            <li class="breadcrumb-item active">Düzenle</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width:40px;height:40px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="bi bi-pencil-fill" style="color:var(--green);font-size:16px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:700;color:var(--dark);">Gün Planını Düzenle</div>
+                            <div style="font-size:12px;color:var(--text-muted);">Bilgileri güncelleyip kaydedin</div>
+                        </div>
+                    </div>
+                    <span class="pill">
+                        <i class="bi bi-hash"></i> ID: <code>@Model.TourPlanningId</code>
+                    </span>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-controller="TourPlanning" asp-action="UpdateTourPlanning" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="TourPlanningId" />
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-sun me-1" style="color:var(--green);"></i> Gün Numarası
+                            </label>
+                            <input asp-for="DayNumber" type="number" min="1" class="form-control loc-input" />
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-map me-1" style="color:var(--green);"></i> Tur
+                            </label>
+                            @if (ViewBag.Tours != null)
+                            {
+                                <select asp-for="TourId" class="form-select" asp-items="ViewBag.Tours">
+                                    <option value="">— Tur Seç —</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <input asp-for="TourId" class="form-control loc-input" />
+                            }
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-type me-1" style="color:var(--green);"></i> Gün Başlığı
+                            </label>
+                            <input asp-for="DayTitle" class="form-control loc-input" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-text-left me-1" style="color:var(--green);"></i> Açıklama
+                            </label>
+                            <textarea asp-for="Description" class="form-control loc-textarea"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-lightning me-1" style="color:var(--green);"></i> Aktiviteler
+                            </label>
+                            <textarea asp-for="Activities" class="form-control loc-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn-green d-flex align-items-center gap-2">
+                            <i class="bi bi-check-lg"></i> Güncelle
+                        </button>
+                        <a asp-controller="TourPlanning" asp-action="Index"
+                           class="btn" style="background:var(--surface);color:var(--text-muted);border-radius:10px;padding:9px 22px;border:1.5px solid var(--border);font-size:14px;font-weight:600;">
+                            İptal
+                        </a>
+                        <a asp-controller="TourPlanning" asp-action="DeleteTourPlanning" asp-route-id="@Model.TourPlanningId"
+                           class="btn ms-auto" style="background:rgba(239,68,68,.08);color:var(--danger);border-radius:10px;padding:9px 18px;border:1.5px solid rgba(239,68,68,.2);font-size:14px;font-weight:600;"
+                           onclick="return confirm('Silmek istediğine emin misin?');">
+                            <i class="bi bi-trash-fill me-1"></i> Sil
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mevcut Bilgiler -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-info-circle me-2" style="color:var(--green);"></i> Mevcut Bilgiler
+            </div>
+            <div class="card-body p-4">
+                <div style="background:var(--green-lt);border-radius:12px;padding:14px 16px;border:1.5px solid var(--green-mid);">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span style="font-size:12px;color:var(--text-muted);font-weight:600;">Gün</span>
+                            <div style="width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                <span style="color:#fff;font-size:13px;font-weight:800;">@Model.DayNumber</span>
+                            </div>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div>
+                            <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">Başlık</div>
+                            <div style="font-size:13px;font-weight:700;color:var(--text-main);">@Model.DayTitle</div>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div>
+                            <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">Tur</div>
+                            @{
+                                var tourName = ViewBag.Tours != null
+                                ? ((IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)ViewBag.Tours)
+                                .FirstOrDefault(x => x.Value == Model.TourId.ToString())?.Text ?? Model.TourId.ToString()
+                                : Model.TourId.ToString();
+                            }
+                            <span class="badge-green">@tourName</span>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div>
+                            <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">Aktiviteler</div>
+                            <div style="font-size:12px;color:var(--text-main);">@Model.Activities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

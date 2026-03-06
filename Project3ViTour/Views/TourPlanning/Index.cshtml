@@ -1,0 +1,267 @@
+﻿@model List<ResultTourPlanningDto>
+@{
+    ViewData["Title"] = "Tur Planları";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .search-wrap {
+            position: relative;
+        }
+
+            .search-wrap i {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                font-size: 14px;
+                pointer-events: none;
+            }
+
+            .search-wrap input {
+                border-radius: 10px;
+                border: 1.5px solid var(--border);
+                background: var(--surface);
+                padding: 9px 14px 9px 38px;
+                font-size: 13.5px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                transition: all .15s;
+                outline: none;
+                width: 260px;
+            }
+
+                .search-wrap input:focus {
+                    border-color: var(--green);
+                    box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                    background: #fff;
+                }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+            .pill code {
+                font-size: 11.5px;
+                color: var(--green-dk);
+                background: transparent;
+                padding: 0;
+                font-weight: 700;
+            }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid transparent;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+        }
+
+        .action-btn-edit {
+            background: var(--green-lt);
+            border-color: var(--green-mid);
+            color: var(--green-dk);
+        }
+
+            .action-btn-edit:hover {
+                background: var(--green-mid);
+                color: var(--green-dk);
+            }
+
+        .action-btn-del {
+            background: rgba(239,68,68,.07);
+            border-color: rgba(239,68,68,.2);
+            color: var(--danger);
+        }
+
+            .action-btn-del:hover {
+                background: rgba(239,68,68,.15);
+            }
+
+        .day-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--green-lt);
+            border: 1.5px solid var(--green-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--green-dk);
+            flex-shrink: 0;
+        }
+    </style>
+}
+
+<div class="page-header d-flex align-items-center justify-content-between">
+    <div>
+        <h1 class="page-title">Tur Planları</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+                <li class="breadcrumb-item active">Tur Planları</li>
+            </ol>
+        </nav>
+    </div>
+    <a class="btn-green d-flex align-items-center gap-2"
+       asp-controller="TourPlanning" asp-action="CreateTourPlanning"
+       style="text-decoration:none; border-radius:12px; padding:10px 22px;">
+        <i class="bi bi-plus-lg"></i> Yeni Gün Planı
+    </a>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-journal-text" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Count ?? 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Toplam Plan</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-map" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Select(x => x.TourId).Distinct().Count() ?? 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Tur</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-sun" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Any() == true ? Model.Max(x => x.DayNumber) : 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Max Gün</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table Card -->
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-journal-text" style="color:var(--green);"></i>
+            <span>Tüm Planlar</span>
+            <span class="badge-green">@(Model?.Count ?? 0) kayıt</span>
+        </div>
+        <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input id="tableSearch" type="text" placeholder="Başlık veya tur ara…" />
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-center py-5" style="color:var(--text-muted);">
+                <div style="width:72px;height:72px;background:var(--green-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                    <i class="bi bi-journal-text" style="font-size:32px;color:var(--green);"></i>
+                </div>
+                <h6 style="font-weight:600;color:var(--text-main);">Henüz plan yok</h6>
+                <p style="font-size:13px;margin-bottom:20px;">Tura gün gün plan ekleyebilirsin.</p>
+                <a class="btn-green" asp-controller="TourPlanning" asp-action="CreateTourPlanning"
+                   style="text-decoration:none;border-radius:10px;padding:9px 22px;">
+                    <i class="bi bi-plus-lg me-1"></i> Plan Ekle
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="planningTable">
+                    <thead>
+                        <tr>
+                            <th style="padding:14px 20px;">Gün</th>
+                            <th style="padding:14px 20px;">Başlık & Açıklama</th>
+                            <th style="padding:14px 20px;">Tur</th>
+                            <th style="padding:14px 20px;">Aktiviteler</th>
+                            <th style="padding:14px 20px; text-align:right;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderBy(x => x.DayNumber))
+                        {
+                            <tr class="data-row" style="border-bottom:1px solid var(--border);">
+                                <td style="padding:13px 20px;">
+                                    <div class="day-badge">@item.DayNumber</div>
+                                </td>
+                                <td style="padding:13px 20px; max-width:280px;">
+                                    <div style="font-weight:700;color:var(--text-main);font-size:14px;">@item.DayTitle</div>
+                                    <div style="font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;margin-top:2px;">
+                                        @item.Description
+                                    </div>
+                                </td>
+                                <td style="padding:13px 20px;">
+                                    <span class="badge-green">
+                                        @(ViewBag.Tours != null && ((Dictionary<string, string>)ViewBag.Tours).ContainsKey(item.TourId.ToString())
+                                            ? ((Dictionary<string, string>)ViewBag.Tours)[item.TourId.ToString()]
+                                            : item.TourId.ToString())
+                                    </span>
+                                </td>
+                                <td style="padding:13px 20px; max-width:200px;">
+                                    <div style="font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">
+                                        @item.Activities
+                                    </div>
+                                </td>
+                                <td style="padding:13px 20px; text-align:right;">
+                                    <div class="d-inline-flex gap-2">
+                                        <a class="action-btn action-btn-edit"
+                                           asp-controller="TourPlanning" asp-action="UpdateTourPlanning" asp-route-id="@item.TourPlanningId"
+                                           title="Düzenle">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        <a class="action-btn action-btn-del"
+                                           asp-controller="TourPlanning" asp-action="DeleteTourPlanning" asp-route-id="@item.TourPlanningId"
+                                           onclick="return confirm('Silmek istediğine emin misin?');"
+                                           title="Sil">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('tableSearch')?.addEventListener('input', function () {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll('#planningTable tbody tr.data-row').forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+    </script>
+}

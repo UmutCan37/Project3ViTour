@@ -1,0 +1,157 @@
+﻿@model Project3ViTour.Dtos.LocationDtos.GetLocationByIdDto
+@{
+    ViewData["Title"] = "Lokasyon Düzenle";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Lokasyon Düzenle</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Location/Index" style="color:var(--green);">Lokasyonlar</a></li>
+            <li class="breadcrumb-item active">Düzenle</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row g-4">
+    <!-- Form -->
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:40px;height:40px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-pencil-fill" style="color:var(--green);font-size:16px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight:700;color:var(--dark);">Lokasyonu Düzenle</div>
+                        <div style="font-size:12px;color:var(--text-muted);">Mevcut bilgileri güncelleyin</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="UpdateLocation" asp-controller="Location" method="post">
+                    <input asp-for="LocationId" type="hidden" />
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-globe me-1" style="color:var(--green);"></i> Ülke
+                            </label>
+                            <input asp-for="Country" class="form-control loc-input" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-building me-1" style="color:var(--green);"></i> Şehir
+                            </label>
+                            <input asp-for="City" class="form-control loc-input" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-pin-map me-1" style="color:var(--green);"></i> Bölge
+                            </label>
+                            <input asp-for="Region" class="form-control loc-input" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-image me-1" style="color:var(--green);"></i> Harita Görseli URL
+                            </label>
+                            <input asp-for="MapLocationImageUrl" class="form-control loc-input" id="mapImageUrl" />
+                            <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                                <i class="bi bi-info-circle me-1"></i> Pixar tarzı AI harita görseli URL'si
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn-green d-flex align-items-center gap-2">
+                            <i class="bi bi-check-lg"></i> Güncelle
+                        </button>
+                        <a href="/Location/Index" class="btn" style="background:var(--surface);color:var(--text-muted);border-radius:10px;padding:9px 22px;border:1.5px solid var(--border);font-size:14px;font-weight:600;">
+                            İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="col-lg-5 d-flex flex-column gap-4">
+        <!-- Map Preview -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-map me-2" style="color:var(--green);"></i> Harita Önizleme
+            </div>
+            <div class="card-body p-4">
+                <div id="mapPreview" style="width:100%;height:220px;background:var(--surface);border-radius:14px;overflow:hidden;border:1.5px solid var(--green-mid);">
+                    <img src="@Model.MapLocationImageUrl" id="previewImg"
+                         style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Info Card -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-info-circle me-2" style="color:var(--green);"></i> Mevcut Bilgiler
+            </div>
+            <div class="card-body p-4">
+                <div style="background:var(--green-lt);border-radius:12px;padding:14px 16px;border:1.5px solid var(--green-mid);">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-globe" style="color:var(--green);font-size:14px;"></i>
+                                <span style="font-size:12px;color:var(--text-muted);font-weight:600;">Ülke</span>
+                            </div>
+                            <span style="font-size:14px;font-weight:700;color:var(--text-main);">@Model.Country</span>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-building" style="color:var(--green);font-size:14px;"></i>
+                                <span style="font-size:12px;color:var(--text-muted);font-weight:600;">Şehir</span>
+                            </div>
+                            <span style="font-size:14px;font-weight:700;color:var(--text-main);">@Model.City</span>
+                        </div>
+                        <div style="height:1px;background:var(--green-mid);"></div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-pin-map" style="color:var(--green);font-size:14px;"></i>
+                                <span style="font-size:12px;color:var(--text-muted);font-weight:600;">Bölge</span>
+                            </div>
+                            <span class="badge-green">@Model.Region</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .loc-input {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .loc-input:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                outline: none;
+            }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById('mapImageUrl').addEventListener('input', function () {
+            document.getElementById('previewImg').src = this.value;
+        });
+    </script>
+}

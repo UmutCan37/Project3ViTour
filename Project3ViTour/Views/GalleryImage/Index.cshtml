@@ -1,0 +1,333 @@
+﻿@using Project3ViTour.Dtos.GalleryImageDtos
+@model List<ResultGalleryImageDto>
+@{
+    ViewData["Title"] = "Galeri";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .loc-input:focus, .form-control:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+            background: #fff;
+            outline: none;
+        }
+
+        .thumb {
+            width: 66px;
+            height: 46px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+            .pill code {
+                font-size: 11.5px;
+                color: var(--green-dk);
+                background: transparent;
+                padding: 0;
+                font-weight: 700;
+            }
+
+        .search-wrap input {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            padding: 9px 14px 9px 38px;
+            font-size: 13.5px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+            outline: none;
+            width: 260px;
+        }
+
+            .search-wrap input:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                background: #fff;
+            }
+
+        .search-wrap {
+            position: relative;
+        }
+
+            .search-wrap i {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                font-size: 14px;
+                pointer-events: none;
+            }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid transparent;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+        }
+
+        .action-btn-edit {
+            background: var(--green-lt);
+            border-color: var(--green-mid);
+            color: var(--green-dk);
+        }
+
+            .action-btn-edit:hover {
+                background: var(--green-mid);
+                color: var(--green-dk);
+            }
+
+        .action-btn-open {
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text-muted);
+        }
+
+            .action-btn-open:hover {
+                background: var(--green-lt);
+                border-color: var(--green);
+                color: var(--green-dk);
+            }
+
+        .action-btn-del {
+            background: rgba(239,68,68,.07);
+            border-color: rgba(239,68,68,.2);
+            color: var(--danger);
+        }
+
+            .action-btn-del:hover {
+                background: rgba(239,68,68,.15);
+            }
+    </style>
+}
+
+<div class="page-header d-flex align-items-center justify-content-between">
+    <div>
+        <h1 class="page-title">Galeri Görselleri</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+                <li class="breadcrumb-item active">Galeri</li>
+            </ol>
+        </nav>
+    </div>
+    <a class="btn-green d-flex align-items-center gap-2" asp-controller="GalleryImage" asp-action="CreateGalleryImage"
+       style="text-decoration:none; border-radius:12px; padding:10px 22px;">
+        <i class="bi bi-plus-lg"></i> Yeni Görsel
+    </a>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-images" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Count ?? 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Toplam Görsel</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-map" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Select(x => x.TourId).Distinct().Count() ?? 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Tur</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card p-3 d-flex flex-row align-items-center gap-3">
+            <div style="width:46px;height:46px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-link-45deg" style="color:var(--green);font-size:20px;"></i>
+            </div>
+            <div>
+                <div style="font-size:22px;font-weight:800;color:var(--dark);">@(Model?.Count(x => !string.IsNullOrWhiteSpace(x.ImageUrl)) ?? 0)</div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">URL'li Görsel</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table Card -->
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-image-fill" style="color:var(--green);"></i>
+            <span>Tüm Görseller</span>
+            <span class="badge-green">@(Model?.Count ?? 0) kayıt</span>
+        </div>
+        <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input id="tableSearch" type="text" placeholder="Başlık veya TourId ara…" />
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-center py-5" style="color:var(--text-muted);">
+                <div style="width:72px;height:72px;background:var(--green-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                    <i class="bi bi-images" style="font-size:32px;color:var(--green);"></i>
+                </div>
+                <h6 style="font-weight:600;color:var(--text-main);">Henüz görsel yok</h6>
+                <p style="font-size:13px;margin-bottom:20px;">İlk galeri görselini ekleyerek başlayın.</p>
+                <a class="btn-green" asp-controller="GalleryImage" asp-action="CreateGalleryImage"
+                   style="text-decoration:none;border-radius:10px;padding:9px 22px;">
+                    <i class="bi bi-plus-lg me-1"></i> Yeni Görsel Ekle
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="galleryTable">
+                    <thead>
+                        <tr>
+                            <th style="padding:14px 20px;">Önizleme</th>
+                            <th style="padding:14px 20px;">Başlık</th>
+                            <th style="padding:14px 20px;">Tur</th>
+                            <th style="padding:14px 20px;">ID</th>
+                            <th style="padding:14px 20px; text-align:right;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="data-row" style="border-bottom:1px solid var(--border);">
+                                <td style="padding:12px 20px;">
+                                    <img class="thumb"
+                                         src="@(string.IsNullOrWhiteSpace(item.ImageUrl) ? "https://via.placeholder.com/120x80?text=No+Image" : item.ImageUrl)"
+                                         alt="@item.Title" />
+                                </td>
+                                <td style="padding:12px 20px; max-width:300px;">
+                                    <div style="font-weight:700;color:var(--text-main);font-size:14px;">@item.Title</div>
+                                    <div style="font-size:11.5px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px;margin-top:2px;">
+                                        @item.ImageUrl
+                                    </div>
+                                </td>
+                                <td style="padding:12px 20px;">
+                                    <span class="pill">
+                                        <i class="bi bi-map"></i>
+                                        <code class="tour-id">
+                                            @(ViewBag.Tours != null && ((Dictionary<string, string>)ViewBag.Tours).ContainsKey(item.TourId.ToString())
+                                                ? ((Dictionary<string, string>)ViewBag.Tours)[item.TourId.ToString()]
+                                                : item.TourId.ToString())
+                                        </code>
+                                    </span>
+                                </td>
+                                <td style="padding:12px 20px;">
+                                    <span class="pill">
+                                        <i class="bi bi-hash"></i>
+                                        <code>@item.GalleryImageId</code>
+                                    </span>
+                                </td>
+                                <td style="padding:12px 20px; text-align:right;">
+                                    <div class="d-inline-flex gap-2">
+                                        <a class="action-btn action-btn-open" href="@item.ImageUrl" target="_blank" rel="noopener" title="Görseli Aç">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                        <a class="action-btn action-btn-edit"
+                                           asp-controller="GalleryImage" asp-action="UpdateGalleryImage" asp-route-id="@item.GalleryImageId"
+                                           title="Düzenle">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        <button class="action-btn action-btn-del" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                data-id="@item.GalleryImageId" data-title="@item.Title"
+                                                title="Sil">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="d-none search-title">@item.Title</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);">
+            <div class="modal-header" style="border-bottom:1.5px solid var(--border);padding:18px 24px;">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:38px;height:38px;background:rgba(239,68,68,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                        <i class="bi bi-trash-fill" style="color:var(--danger);font-size:16px;"></i>
+                    </div>
+                    <h5 class="modal-title mb-0" style="font-weight:700;color:var(--dark);">Görseli Sil</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="padding:20px 24px;">
+                <p style="color:var(--text-muted);font-size:14px;margin-bottom:12px;">Bu işlem geri alınamaz. Silmek istediğiniz görsel:</p>
+                <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text-main);font-weight:600;">
+                    <i class="bi bi-image me-2" style="color:var(--green);"></i>
+                    <span id="deleteTitleText">Seçili görsel</span>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top:1.5px solid var(--border);padding:14px 24px;gap:8px;">
+                <button type="button" class="btn" style="border-radius:10px;padding:9px 20px;border:1.5px solid var(--border);color:var(--text-muted);font-weight:600;font-size:14px;" data-bs-dismiss="modal">
+                    Vazgeç
+                </button>
+                <a id="btnConfirmDelete" class="btn" href="#"
+                   style="border-radius:10px;padding:9px 20px;background:var(--danger);color:#fff;font-weight:600;font-size:14px;border:none;">
+                    <i class="bi bi-trash-fill me-1"></i> Sil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Arama
+        document.getElementById('tableSearch')?.addEventListener('input', function () {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll('#galleryTable tbody tr.data-row').forEach(row => {
+                const title = (row.querySelector('.search-title')?.innerText || '').toLowerCase();
+                const tourId = (row.querySelector('.tour-id')?.innerText || '').toLowerCase();
+                row.style.display = (title.includes(q) || tourId.includes(q)) ? '' : 'none';
+            });
+        });
+
+        // Modal
+        document.getElementById('deleteModal')?.addEventListener('show.bs.modal', function (e) {
+            const btn = e.relatedTarget;
+            document.getElementById('deleteTitleText').textContent = btn.getAttribute('data-title') || 'Seçili görsel';
+            document.getElementById('btnConfirmDelete').href = '/GalleryImage/DeleteGalleryImage/' + btn.getAttribute('data-id');
+        });
+    </script>
+}

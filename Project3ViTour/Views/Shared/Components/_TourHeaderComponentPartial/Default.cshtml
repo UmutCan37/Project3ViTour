@@ -1,4 +1,7 @@
-﻿ <!-- Main Header -->
+﻿@inject IStringLocalizer<Project3ViTour.Resources.SharedResource> L
+@using Microsoft.Extensions.Localization
+
+<!-- Main Header -->
 <header class="main-header flex">
     <!-- Header Lower -->
     <div id="header">
@@ -18,17 +21,15 @@
                             <i class="icon-phone"></i>
                             <span>+90 500 400 30 20</span>
                         </li>
-
-
                     </ul>
                 </div>
                 <div class="header-top-left flex-two">
-                    <a href="contact-us.html" class="booking">
+                    <a href="/Tour/Booking/" class="booking">
                         <i class="icon-19"></i>
-                        <span>Rezervasyon Yap</span>
+                        <span>@L["Nav_Booking"]</span>
                     </a>
                     <div class="follow-social flex-two">
-                        <span>Bizi Takip Edin :</span>
+                        <span>@L["Nav_Follow"] :</span>
                         <ul class="flex-two">
                             <li><a href="#"><i class="icon-icon-2"></i></a></li>
                             <li><a href="#"><i class="icon-icon_03"></i></a></li>
@@ -36,10 +37,8 @@
                             <li><a href="#"><i class="icon-icon"></i></a></li>
                         </ul>
                     </div>
-
                 </div>
             </div>
-
         </div>
         <div class="header-lower">
             <div class="tf-container full">
@@ -60,43 +59,49 @@
                             <div class="nav-outer flex align-center">
                                 <!-- Main Menu -->
                                 <nav class="main-menu show navbar-expand-md">
-                                    <div class="navbar-collapse collapse clearfix"
-                                         id="navbarSupportedContent">
+                                    <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                         <ul class="navigation clearfix">
-                                            <li><a href="#">Ana Sayfa</a></li>
-                                            <li><a href="#">Kültür Turları</a></li>
-                                            <li><a href="#">Vizesiz Turlar</a></li>
-                                            <li><a href="#">Kıbrıs Turları</a></li>
-                                            <li><a href="#">Rehberlerimiz</a></li>
-                                            <li><a href="#">Bize Yazın</a></li>
+                                            <li><a href="#">@L["Nav_Home"]</a></li>
+                                            <li><a href="#">@L["Nav_CultureTours"]</a></li>
+                                            <li><a href="#">@L["Nav_VisaFreeTours"]</a></li>
+                                            <li><a href="#">@L["Nav_CyprusTours"]</a></li>
+                                            <li><a href="#">@L["Nav_Guides"]</a></li>
+                                            <li><a href="#">@L["Nav_Contact"]</a></li>
                                         </ul>
                                     </div>
                                 </nav>
                                 <!-- Main Menu End-->
                             </div>
                             <div class="header-account flex align-center">
+
+                                <!-- Dil Seçimi -->
                                 <div class="language">
                                     <div class="nice-select" tabindex="0">
-                                        <img src="/vitour/assets/images/page/language.svg" alt=""><span class="current">English</span>
+                                        <img src="/vitour/assets/images/page/language.svg" alt="">
+                                        <span class="current">
+                                            @(System.Globalization.CultureInfo.CurrentCulture.Name == "tr" ? "🇹🇷 Türkçe" :
+                                                System.Globalization.CultureInfo.CurrentCulture.Name == "fr" ? "🇫🇷 Français" : "EN English")
+                                        </span>
                                         <ul class="list">
-                                            <li data-value class="option selected">
-                                                <img src="/vitour/assets/images/page/language.svg" alt="">English
+                                            <li class="option @(System.Globalization.CultureInfo.CurrentCulture.Name == "tr" ? "selected" : "")">
+                                                <a href="/Tour/ChangeLanguage?culture=tr&returnUrl=@Context.Request.Path">
+                                                    🇹🇷 Türkçe
+                                                </a>
                                             </li>
-                                            <li data-value="Vietnam" class="option">
-                                                <img src="/vitour/assets/images/page/language.svg" alt="">Vietnam
+                                            <li class="option @(System.Globalization.CultureInfo.CurrentCulture.Name == "en" ? "selected" : "")">
+                                                <a href="/Tour/ChangeLanguage?culture=en&returnUrl=@Context.Request.Path">
+                                                    en English
+                                                </a>
                                             </li>
-                                            <li data-value="German" class="option">
-                                                <img src="/vitour/assets/images/page/language.svg" alt="">German
-                                            </li>
-                                            <li data-value="Russian" class="option">
-                                                <img src="/vitour/assets/images/page/language.svg" alt="">Russian
-                                            </li>
-                                            <li data-value="Canada" class="option">
-                                                <img src="/vitour/assets/images/page/language.svg" alt="">Canada
+                                            <li class="option @(System.Globalization.CultureInfo.CurrentCulture.Name == "fr" ? "selected" : "")">
+                                                <a href="/Tour/ChangeLanguage?culture=fr&returnUrl=@Context.Request.Path">
+                                                    🇫🇷 Français
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="currency">
                                     <div class="nice-select" tabindex="0">
                                         <span class="current">USD</span>
@@ -107,6 +112,7 @@
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="search-mobie relative">
                                     <div class="dropdown">
                                         <a type="button" class="show-search" data-bs-toggle="dropdown" aria-expanded="false">
@@ -114,18 +120,19 @@
                                         </a>
                                         <ul class="dropdown-menu top-search">
                                             <form action="/" id="search-bar-widget">
-                                                <input type="text" placeholder="Aranacak kelime">
+                                                <input type="text" placeholder="@L["Nav_Search"]">
                                                 <button type="button"><i class="icon-search-2"></i></button>
                                             </form>
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="register">
                                     <ul class="flex align-center">
-                                        <li class="">
+                                        <li>
                                             <a href="login.html">
                                                 <i class="icon-user-1-1"></i>
-                                                <span>Giriş Yap</span>
+                                                <span>@L["Nav_Login"]</span>
                                             </a>
                                         </li>
                                     </ul>

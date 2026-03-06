@@ -1,0 +1,183 @@
+﻿@model Project3ViTour.Dtos.LocationDtos.CreateLocationDto
+@{
+    ViewData["Title"] = "Lokasyon Ekle";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Lokasyon Ekle</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index" style="color:var(--green);">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Location/Index" style="color:var(--green);">Lokasyonlar</a></li>
+            <li class="breadcrumb-item active">Ekle</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row g-4">
+    <!-- Form -->
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:40px;height:40px;background:var(--green-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="bi bi-geo-alt-fill" style="color:var(--green);font-size:17px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight:700;color:var(--dark);">Lokasyon Bilgileri</div>
+                        <div style="font-size:12px;color:var(--text-muted);">Yeni lokasyon detaylarını girin</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="CreateLocation" asp-controller="Location" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-globe me-1" style="color:var(--green);"></i> Ülke
+                            </label>
+                            <input asp-for="Country" class="form-control loc-input" placeholder="örn. Türkiye" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-building me-1" style="color:var(--green);"></i> Şehir
+                            </label>
+                            <input asp-for="City" class="form-control loc-input" placeholder="örn. Nevşehir" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-pin-map me-1" style="color:var(--green);"></i> Bölge
+                            </label>
+                            <input asp-for="Region" class="form-control loc-input" placeholder="örn. Kapadokya" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" style="font-weight:600;font-size:13px;color:var(--text-main);">
+                                <i class="bi bi-image me-1" style="color:var(--green);"></i> Harita Görseli URL
+                            </label>
+                            <input asp-for="MapLocationImageUrl" class="form-control loc-input" id="mapImageUrl" placeholder="https://..." />
+                            <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                                <i class="bi bi-info-circle me-1"></i> Pixar tarzı AI harita görseli URL'si
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn-green d-flex align-items-center gap-2">
+                            <i class="bi bi-check-lg"></i> Lokasyonu Kaydet
+                        </button>
+                        <a href="/Location/Index" class="btn" style="background:var(--surface);color:var(--text-muted);border-radius:10px;padding:9px 22px;border:1.5px solid var(--border);font-size:14px;font-weight:600;">
+                            İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="col-lg-5">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-map me-2" style="color:var(--green);"></i> Harita Önizleme
+            </div>
+            <div class="card-body p-4">
+                <div id="mapPreview" style="width:100%;height:220px;background:var(--surface);border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1.5px dashed var(--border);transition:border-color .2s;">
+                    <div class="text-center" id="placeholderEl">
+                        <i class="bi bi-map" style="font-size:44px;color:var(--border);"></i>
+                        <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">URL girildiğinde önizleme burada görünecek</p>
+                    </div>
+                </div>
+
+                <!-- Location Summary Card -->
+                <div id="locationSummary" class="mt-3" style="display:none;">
+                    <div style="background:var(--green-lt);border-radius:12px;padding:14px 16px;border:1.5px solid var(--green-mid);">
+                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">Lokasyon Özeti</div>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-globe" style="color:var(--green);font-size:13px;width:16px;"></i>
+                                <span id="summaryCountry" style="font-size:13px;font-weight:600;color:var(--text-main);">—</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-building" style="color:var(--green);font-size:13px;width:16px;"></i>
+                                <span id="summaryCity" style="font-size:13px;color:var(--text-muted);">—</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-pin-map" style="color:var(--green);font-size:13px;width:16px;"></i>
+                                <span id="summaryRegion" style="font-size:13px;color:var(--text-muted);">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .loc-input {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all .15s;
+        }
+
+            .loc-input:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(46,204,113,.12);
+                outline: none;
+            }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        const mapImageUrl = document.getElementById('mapImageUrl');
+        const mapPreview = document.getElementById('mapPreview');
+        const placeholderEl = document.getElementById('placeholderEl');
+        const locationSummary = document.getElementById('locationSummary');
+
+        mapImageUrl.addEventListener('input', function () {
+            if (this.value) {
+                placeholderEl.style.display = 'none';
+                mapPreview.style.borderStyle = 'solid';
+                mapPreview.style.borderColor = 'var(--green-mid)';
+                let img = mapPreview.querySelector('img');
+                if (!img) {
+                    img = document.createElement('img');
+                    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:12px;';
+                    img.onerror = () => { placeholderEl.style.display = ''; img.style.display = 'none'; };
+                    mapPreview.appendChild(img);
+                }
+                img.src = this.value;
+                img.style.display = '';
+            } else {
+                placeholderEl.style.display = '';
+                mapPreview.style.borderStyle = 'dashed';
+                mapPreview.style.borderColor = 'var(--border)';
+                const img = mapPreview.querySelector('img');
+                if (img) img.style.display = 'none';
+            }
+        });
+
+        // Live summary
+        function updateSummary() {
+            const country = document.querySelector('[name="Country"]').value;
+            const city = document.querySelector('[name="City"]').value;
+            const region = document.querySelector('[name="Region"]').value;
+            if (country || city || region) {
+                locationSummary.style.display = '';
+                document.getElementById('summaryCountry').textContent = country || '—';
+                document.getElementById('summaryCity').textContent = city || '—';
+                document.getElementById('summaryRegion').textContent = region || '—';
+            } else {
+                locationSummary.style.display = 'none';
+            }
+        }
+
+        document.querySelectorAll('.loc-input').forEach(el => el.addEventListener('input', updateSummary));
+    </script>
+}

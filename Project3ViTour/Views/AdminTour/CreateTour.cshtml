@@ -1,13 +1,27 @@
 ﻿@model CreateTourDto
 @{
-    ViewData["Title"] = "CreateTour";
+    ViewData["Title"] = "Yeni Tur Ekle";
     Layout = "~/Views/Shared/_TourLayout.cshtml";
 }
 
-
-
 @section Styles {
     <style>
+        /* ─── Variables ──────────────────────────────────────── */
+        :root {
+            --green: #2ecc71;
+            --green-dk: #27ae60;
+            --green-lt: #eafaf1;
+            --green-mid: #d5f5e3;
+            --green-glow: rgba(46,204,113,.18);
+            --surface: #f7fdf9;
+            --border: #e3f2e9;
+            --text-main: #1a2e1a;
+            --text-muted: #7a9c7a;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --white: #ffffff;
+        }
+
         /* ─── Page Header ───────────────────────────────────── */
         .section-header {
             display: flex;
@@ -20,38 +34,51 @@
 
         .page-eyebrow {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
+            letter-spacing: 2.5px;
+            color: var(--green-dk);
             margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
+            .page-eyebrow::before {
+                content: '';
+                display: inline-block;
+                width: 18px;
+                height: 2px;
+                background: var(--green);
+                border-radius: 2px;
+            }
 
         .page-title {
             margin: 0;
+            font-family: 'Fraunces', serif;
+            color: #1a2e1a;
         }
 
         .btn-back {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #fff;
+            background: var(--white);
             color: var(--text-muted);
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             padding: 10px 18px;
-            border-radius: 10px;
-            font-family: 'DM Sans', sans-serif;
+            border-radius: 12px;
             font-size: 13.5px;
             font-weight: 500;
             cursor: pointer;
-            transition: background .15s, color .15s, border-color .15s;
+            transition: all .2s;
             text-decoration: none;
         }
 
             .btn-back:hover {
-                background: var(--surface);
-                color: var(--navy);
-                border-color: #c4cdd9;
+                background: var(--green-lt);
+                color: var(--green-dk);
+                border-color: var(--green);
             }
 
         /* ─── Form Grid ──────────────────────────────────────── */
@@ -63,23 +90,25 @@
         }
 
         @@media (max-width: 1100px) {
-            .form-grid
-
-        {
-            grid-template-columns: 1fr;
-        }
-
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ─── Form Cards ─────────────────────────────────────── */
         .form-card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(46,204,113,.07);
             overflow: hidden;
             margin-bottom: 20px;
+            transition: box-shadow .2s;
         }
+
+            .form-card:hover {
+                box-shadow: 0 4px 24px rgba(46,204,113,.13);
+            }
 
             .form-card:last-child {
                 margin-bottom: 0;
@@ -88,16 +117,16 @@
         .form-card-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 13px;
             padding: 18px 24px;
-            border-bottom: 1px solid var(--border);
-            background: #fafbfd;
+            border-bottom: 1.5px solid var(--border);
+            background: linear-gradient(135deg, var(--green-lt), #f0fff4);
         }
 
         .form-card-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,30 +134,30 @@
             flex-shrink: 0;
         }
 
-        .fci-blue {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
         .fci-green {
-            background: #dcfce7;
-            color: #15803d;
+            background: var(--green-mid);
+            color: var(--green-dk);
         }
 
-        .fci-purple {
-            background: #ede9fe;
-            color: #6d28d9;
+        .fci-teal {
+            background: #ccfbf1;
+            color: #0f766e;
         }
 
-        .fci-yellow {
-            background: #fef9c3;
-            color: #854d0e;
+        .fci-lime {
+            background: #ecfccb;
+            color: #4d7c0f;
+        }
+
+        .fci-emerald {
+            background: #d1fae5;
+            color: #065f46;
         }
 
         .form-card-title {
             font-size: 14.5px;
             font-weight: 700;
-            color: var(--navy);
+            color: var(--text-main);
             margin: 0;
             line-height: 1.3;
         }
@@ -148,7 +177,7 @@
             display: block;
             font-size: 13px;
             font-weight: 600;
-            color: var(--navy);
+            color: var(--text-main);
             margin-bottom: 7px;
         }
 
@@ -179,52 +208,33 @@
             z-index: 1;
         }
 
-        .input-icon-right {
-            position: absolute;
-            right: 13px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 13px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         .form-control-custom {
             width: 100%;
             padding: 11px 14px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #fff;
-            font-family: 'DM Sans', sans-serif;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--white);
             font-size: 13.5px;
             color: var(--text-main);
             outline: none;
-            transition: border-color .18s, box-shadow .18s, background .18s;
+            transition: all .2s;
             appearance: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
             .form-control-custom.with-icon {
-                padding-left: 38px;
-            }
-
-            .form-control-custom.with-icon-right {
-                padding-right: 38px;
+                padding-left: 40px;
             }
 
             .form-control-custom:focus {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(45,156,219,.14);
-                background: #fafdff;
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px var(--green-glow);
+                background: #fafffc;
             }
 
             .form-control-custom.is-invalid {
                 border-color: var(--danger);
                 box-shadow: 0 0 0 3px rgba(239,68,68,.12);
-            }
-
-            .form-control-custom.is-valid {
-                border-color: var(--success);
             }
 
         textarea.form-control-custom {
@@ -248,14 +258,6 @@
                 color: var(--danger);
             }
 
-        select.form-control-custom {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2364748b'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 36px;
-            cursor: pointer;
-        }
-
         .field-hint {
             font-size: 12px;
             color: var(--text-muted);
@@ -267,7 +269,7 @@
 
             .field-hint i {
                 font-size: 12px;
-                color: var(--accent);
+                color: var(--green);
             }
 
         .validation-msg {
@@ -281,50 +283,44 @@
         .number-stepper {
             display: flex;
             align-items: center;
-            gap: 0;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-            background: #fff;
-            transition: border-color .18s, box-shadow .18s;
+            background: var(--white);
+            transition: all .2s;
         }
 
             .number-stepper:focus-within {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(45,156,219,.14);
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px var(--green-glow);
             }
 
         .stepper-btn {
-            width: 40px;
-            height: 44px;
+            width: 42px;
+            height: 46px;
             border: none;
-            background: #f8fafc;
-            color: var(--text-muted);
-            font-size: 16px;
+            background: var(--green-lt);
+            color: var(--green-dk);
+            font-size: 17px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background .15s, color .15s;
+            transition: all .15s;
             flex-shrink: 0;
             user-select: none;
         }
 
             .stepper-btn:hover {
-                background: var(--surface);
-                color: var(--navy);
-            }
-
-            .stepper-btn:active {
-                background: #e2e8f0;
+                background: var(--green-mid);
             }
 
             .stepper-btn:first-child {
-                border-right: 1px solid var(--border);
+                border-right: 1.5px solid var(--border);
             }
 
             .stepper-btn:last-child {
-                border-left: 1px solid var(--border);
+                border-left: 1.5px solid var(--border);
             }
 
         .stepper-input {
@@ -332,14 +328,14 @@
             border: none;
             outline: none;
             text-align: center;
-            font-family: 'DM Sans', sans-serif;
             font-size: 15px;
-            font-weight: 600;
-            color: var(--navy);
+            font-weight: 700;
+            color: var(--text-main);
             background: transparent;
             padding: 0 8px;
-            height: 44px;
+            height: 46px;
             -moz-appearance: textfield;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
             .stepper-input::-webkit-inner-spin-button,
@@ -357,22 +353,22 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 44px;
+            width: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f8fafc;
-            border-right: 1px solid var(--border);
-            border-radius: 10px 0 0 10px;
+            background: var(--green-lt);
+            border-right: 1.5px solid var(--border);
+            border-radius: 12px 0 0 12px;
             font-weight: 700;
             font-size: 14px;
-            color: var(--text-muted);
+            color: var(--green-dk);
             pointer-events: none;
             z-index: 1;
         }
 
         .price-input {
-            padding-left: 54px !important;
+            padding-left: 56px !important;
         }
 
         /* ─── Badge Selector ─────────────────────────────────── */
@@ -399,9 +395,9 @@
                 gap: 10px;
                 padding: 11px 14px;
                 border: 2px solid var(--border);
-                border-radius: 10px;
+                border-radius: 12px;
                 cursor: pointer;
-                transition: border-color .18s, background .18s, box-shadow .18s;
+                transition: all .2s;
                 font-size: 13px;
                 font-weight: 600;
                 color: var(--text-main);
@@ -409,14 +405,14 @@
             }
 
                 .badge-option label:hover {
-                    border-color: #c4cdd9;
-                    background: var(--surface);
+                    border-color: var(--green);
+                    background: var(--green-lt);
                 }
 
             .badge-option input:checked + label {
-                border-color: var(--accent);
-                background: #f0f9ff;
-                box-shadow: 0 0 0 2px rgba(45,156,219,.15);
+                border-color: var(--green);
+                background: var(--green-lt);
+                box-shadow: 0 0 0 2px var(--green-glow);
             }
 
         .badge-dot {
@@ -431,7 +427,7 @@
         }
 
         .bd-new {
-            background: #10b981;
+            background: var(--green);
         }
 
         .bd-limited {
@@ -448,16 +444,16 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 18px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: #fff;
-            transition: border-color .18s, background .18s;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            background: var(--white);
+            transition: all .2s;
             cursor: pointer;
         }
 
             .status-toggle-wrap:has(input:checked) {
-                border-color: var(--success);
-                background: #f0fdf4;
+                border-color: var(--green);
+                background: var(--green-lt);
             }
 
         .status-toggle-info {
@@ -467,27 +463,27 @@
         }
 
         .status-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: #f1f5f9;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--green-lt);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--text-muted);
-            transition: background .2s, color .2s;
+            transition: all .2s;
         }
 
         .status-toggle-wrap:has(input:checked) .status-icon {
-            background: #dcfce7;
-            color: #15803d;
+            background: var(--green-mid);
+            color: var(--green-dk);
         }
 
         .status-label-title {
             font-size: 13.5px;
-            font-weight: 600;
-            color: var(--navy);
+            font-weight: 700;
+            color: var(--text-main);
         }
 
         .status-label-sub {
@@ -495,11 +491,10 @@
             color: var(--text-muted);
         }
 
-        /* Custom toggle switch */
         .toggle-switch {
             position: relative;
-            width: 48px;
-            height: 26px;
+            width: 50px;
+            height: 28px;
             flex-shrink: 0;
         }
 
@@ -511,7 +506,7 @@
             position: absolute;
             inset: 0;
             background: #cbd5e1;
-            border-radius: 13px;
+            border-radius: 14px;
             cursor: pointer;
             transition: background .25s;
         }
@@ -521,16 +516,16 @@
                 position: absolute;
                 left: 3px;
                 top: 3px;
-                width: 20px;
-                height: 20px;
+                width: 22px;
+                height: 22px;
                 border-radius: 50%;
-                background: #fff;
-                box-shadow: 0 1px 4px rgba(0,0,0,.18);
+                background: var(--white);
+                box-shadow: 0 1px 4px rgba(0,0,0,.2);
                 transition: transform .25s cubic-bezier(.4,0,.2,1);
             }
 
         .toggle-switch input:checked + .toggle-track {
-            background: var(--success);
+            background: var(--green);
         }
 
             .toggle-switch input:checked + .toggle-track::after {
@@ -540,26 +535,26 @@
         /* ─── Image Preview ──────────────────────────────────── */
         .image-preview-box {
             width: 100%;
-            height: 180px;
+            height: 190px;
             border: 2px dashed var(--border);
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
-            background: #fafbfd;
+            background: var(--green-lt);
             font-size: 13px;
             gap: 6px;
-            transition: border-color .2s, background .2s;
+            transition: all .2s;
             overflow: hidden;
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
             .image-preview-box.has-image {
                 border-style: solid;
-                border-color: var(--accent);
+                border-color: var(--green);
                 background: #000;
             }
 
@@ -586,47 +581,82 @@
         }
 
             .preview-placeholder i {
-                font-size: 32px;
-                color: #cbd5e1;
+                font-size: 34px;
+                color: var(--green-mid);
             }
 
         .image-preview-box.has-image .preview-placeholder {
             opacity: 0;
         }
 
-        /* ─── Submit Section ─────────────────────────────────── */
-        .submit-card {
-            background: #fff;
-            border: 1px solid var(--border);
+        /* ─── Progress ───────────────────────────────────────── */
+        .form-progress {
+            background: var(--white);
+            border: 1.5px solid var(--border);
             border-radius: 16px;
-            box-shadow: var(--shadow-md);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(46,204,113,.07);
+        }
+
+        .progress-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar-wrap {
+            height: 8px;
+            background: var(--green-lt);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #formProgressBar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), #52e090);
+            border-radius: 10px;
+            width: 0%;
+            transition: width .4s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ─── Submit Card ────────────────────────────────────── */
+        .submit-card {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(46,204,113,.07);
             padding: 22px 24px;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
-            background: var(--accent);
+            padding: 15px;
+            background: linear-gradient(135deg, var(--green), var(--green-dk));
             color: #fff;
             border: none;
-            border-radius: 11px;
-            font-family: 'DM Sans', sans-serif;
+            border-radius: 13px;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: background .2s, box-shadow .2s, transform .15s;
+            transition: all .2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 9px;
-            box-shadow: 0 2px 12px rgba(45,156,219,.35);
+            box-shadow: 0 4px 16px rgba(46,204,113,.35);
             margin-bottom: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
             .btn-submit:hover {
-                background: var(--accent-dk);
-                box-shadow: 0 4px 20px rgba(45,156,219,.45);
-                transform: translateY(-1px);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(46,204,113,.45);
             }
 
             .btn-submit:active {
@@ -638,44 +668,59 @@
             padding: 12px;
             background: none;
             color: var(--text-muted);
-            border: 1px solid var(--border);
-            border-radius: 11px;
-            font-family: 'DM Sans', sans-serif;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: background .15s, color .15s;
+            transition: all .15s;
             text-align: center;
             display: block;
             text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
             .btn-cancel-submit:hover {
-                background: var(--surface);
-                color: var(--navy);
+                background: var(--green-lt);
+                color: var(--green-dk);
+                border-color: var(--green);
             }
 
         /* ─── Tips Card ──────────────────────────────────────── */
         .tips-card {
-            background: linear-gradient(135deg, #0d1b2a 0%, #1a3358 100%);
-            border-radius: 16px;
-            padding: 22px 22px;
+            background: linear-gradient(135deg, #0d2e1a 0%, #1a4a2e 100%);
+            border-radius: 18px;
+            padding: 22px;
             color: #fff;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
+            .tips-card::before {
+                content: '';
+                position: absolute;
+                top: -40px;
+                right: -40px;
+                width: 140px;
+                height: 140px;
+                background: rgba(46,204,113,.12);
+                border-radius: 50%;
+            }
+
         .tips-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Fraunces', serif;
             font-size: 15px;
             color: #fff;
             margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
         }
 
             .tips-title i {
-                color: var(--accent);
+                color: var(--green);
                 font-size: 16px;
             }
 
@@ -687,6 +732,7 @@
             font-size: 12.5px;
             color: rgba(255,255,255,.75);
             line-height: 1.5;
+            position: relative;
         }
 
             .tip-item:last-child {
@@ -695,66 +741,19 @@
 
             .tip-item i {
                 font-size: 13px;
-                color: var(--accent);
+                color: var(--green);
                 flex-shrink: 0;
                 margin-top: 1px;
             }
 
-        /* ─── Form progress indicator ────────────────────────── */
-        .form-progress {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 18px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .progress-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .progress-bar-wrap {
-            height: 6px;
-            background: var(--surface);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        #formProgressBar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #38bdf8);
-            border-radius: 10px;
-            width: 0%;
-            transition: width .4s cubic-bezier(.4,0,.2,1);
-        }
-
-        /* ─── Divider ────────────────────────────────────────── */
-        .form-section-divider {
-            height: 1px;
-            background: var(--border);
-            margin: 6px 0 20px;
-        }
-
-        /* ─── Responsive ─────────────────────────────────────── */
         @@media (max-width: 576px) {
-            .badge-selector
+            .badge-selector {
+                grid-template-columns: 1fr 1fr;
+            }
 
-        {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .form-card-body {
-            padding: 16px;
-        }
-
+            .form-card-body {
+                padding: 16px;
+            }
         }
     </style>
 }
@@ -766,174 +765,110 @@
         <h1 class="page-title">Yeni Tur Ekle</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin" class="text-muted">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/admin/tours" class="text-muted">Turlar</a></li>
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-muted">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/AdminTour/TourList" class="text-muted">Turlar</a></li>
                 <li class="breadcrumb-item active text-muted">Yeni Tur</li>
             </ol>
         </nav>
     </div>
-    <a href="/admin/tours" class="btn-back">
+    <a href="/AdminTour/TourList" class="btn-back">
         <i class="bi bi-arrow-left"></i>
         Listeye Dön
     </a>
 </div>
 
 <!-- ═══ FORM ══════════════════════════════════════════════════════════ -->
-<form  method="post" id="createTourForm" novalidate>
+<form method="post" id="createTourForm" novalidate>
     @Html.AntiForgeryToken()
-
     <div class="form-grid">
 
         <!-- ══ LEFT COLUMN ════════════════════════════════════════════ -->
         <div>
-
-            <!-- ── Temel Bilgiler ─────────────────────────────────── -->
+            <!-- Temel Bilgiler -->
             <div class="form-card">
                 <div class="form-card-header">
-                    <div class="form-card-icon fci-blue">
-                        <i class="bi bi-info-circle-fill"></i>
-                    </div>
+                    <div class="form-card-icon fci-teal"><i class="bi bi-info-circle-fill"></i></div>
                     <div>
                         <p class="form-card-title">Temel Bilgiler</p>
                         <p class="form-card-subtitle">Turun adı ve açıklaması</p>
                     </div>
                 </div>
                 <div class="form-card-body">
-
-                    <!-- Tur Adı -->
                     <div class="mb-4">
-                        <label class="form-label-custom" for="Title">
-                            Tur Adı <span class="required">*</span>
-                        </label>
+                        <label class="form-label-custom" for="Title">Tur Adı <span class="required">*</span></label>
                         <div class="input-wrapper">
                             <i class="bi bi-type input-icon"></i>
-                            <input asp-for="Title"
-                                   id="Title"
-                                   class="form-control-custom with-icon"
-                                   placeholder="Örn: Kapadokya Balon Turu"
-                                   maxlength="100"
-                                   autocomplete="off" />
+                            <input asp-for="Title" id="Title" class="form-control-custom with-icon"
+                                   placeholder="Örn: Kapadokya Balon Turu" maxlength="100" autocomplete="off" />
                         </div>
                         <div class="char-counter" id="titleCounter">0 / 100</div>
                         <span asp-validation-for="Title" class="validation-msg" style="display:block;"></span>
                     </div>
-
-                    <!-- Açıklama -->
                     <div class="mb-0">
                         <label class="form-label-custom" for="Description">
                             Tur Açıklaması <span class="required">*</span>
                             <span class="form-label-hint">Kısa ve öz tutun</span>
                         </label>
-                        <textarea asp-for="Description"
-                                  id="Description"
-                                  class="form-control-custom"
-                                  placeholder="Tur hakkında kısa bir açıklama yazın…"
-                                  maxlength="500"
-                                  rows="4"></textarea>
+                        <textarea asp-for="Description" id="Description" class="form-control-custom"
+                                  placeholder="Tur hakkında kısa bir açıklama yazın…" maxlength="500" rows="4"></textarea>
                         <div class="char-counter" id="descCounter">0 / 500</div>
                         <span asp-validation-for="Description" class="validation-msg" style="display:block;"></span>
                     </div>
-
                 </div>
             </div>
 
-            <!-- ── Tur Detayları ───────────────────────────────────── -->
+            <!-- Tur Detayları -->
             <div class="form-card">
                 <div class="form-card-header">
-                    <div class="form-card-icon fci-purple">
-                        <i class="bi bi-sliders2-vertical"></i>
-                    </div>
+                    <div class="form-card-icon fci-emerald"><i class="bi bi-sliders2-vertical"></i></div>
                     <div>
                         <p class="form-card-title">Tur Detayları</p>
                         <p class="form-card-subtitle">Süre, kapasite ve fiyat bilgileri</p>
                     </div>
                 </div>
                 <div class="form-card-body">
-
                     <div class="row g-4">
-
-                        <!-- Gün Sayısı -->
                         <div class="col-sm-6">
-                            <label class="form-label-custom" for="DayCount">
-                                Tur Süresi <span class="required">*</span>
-                            </label>
+                            <label class="form-label-custom" for="DayCount">Tur Süresi <span class="required">*</span></label>
                             <div class="number-stepper">
-                                <button type="button" class="stepper-btn" onclick="stepValue('DayCount', -1, 1, 365)">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <input asp-for="DayCount"
-                                       id="DayCount"
-                                       class="stepper-input"
-                                       type="number"
-                                       min="1" max="365"
-                                       value="1" />
-                                <button type="button" class="stepper-btn" onclick="stepValue('DayCount', 1, 1, 365)">
-                                    <i class="bi bi-plus"></i>
-                                </button>
+                                <button type="button" class="stepper-btn" onclick="stepValue('DayCount', -1, 1, 365)"><i class="bi bi-dash"></i></button>
+                                <input asp-for="DayCount" id="DayCount" class="stepper-input" type="number" min="1" max="365" value="1" />
+                                <button type="button" class="stepper-btn" onclick="stepValue('DayCount', 1, 1, 365)"><i class="bi bi-plus"></i></button>
                             </div>
                             <p class="field-hint"><i class="bi bi-info-circle"></i> Gün cinsinden süre (1–365)</p>
-                            <span asp-validation-for="DayCount" class="validation-msg" style="display:block;"></span>
                         </div>
-
-                        <!-- Kapasite -->
                         <div class="col-sm-6">
-                            <label class="form-label-custom" for="Capacity">
-                                Kapasite <span class="required">*</span>
-                            </label>
+                            <label class="form-label-custom" for="Capacity">Kapasite <span class="required">*</span></label>
                             <div class="number-stepper">
-                                <button type="button" class="stepper-btn" onclick="stepValue('Capacity', -1, 1, 999)">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <input asp-for="Capacity"
-                                       id="Capacity"
-                                       class="stepper-input"
-                                       type="number"
-                                       min="1" max="999"
-                                       value="10" />
-                                <button type="button" class="stepper-btn" onclick="stepValue('Capacity', 1, 1, 999)">
-                                    <i class="bi bi-plus"></i>
-                                </button>
+                                <button type="button" class="stepper-btn" onclick="stepValue('Capacity', -1, 1, 999)"><i class="bi bi-dash"></i></button>
+                                <input asp-for="Capacity" id="Capacity" class="stepper-input" type="number" min="1" max="999" value="10" />
+                                <button type="button" class="stepper-btn" onclick="stepValue('Capacity', 1, 1, 999)"><i class="bi bi-plus"></i></button>
                             </div>
                             <p class="field-hint"><i class="bi bi-info-circle"></i> Maksimum katılımcı sayısı</p>
-                            <span asp-validation-for="Capacity" class="validation-msg" style="display:block;"></span>
                         </div>
-
-                        <!-- Fiyat -->
                         <div class="col-12">
-                            <label class="form-label-custom" for="Price">
-                                Fiyat (USD) <span class="required">*</span>
-                            </label>
+                            <label class="form-label-custom" for="Price">Fiyat (₺) <span class="required">*</span></label>
                             <div class="price-wrapper">
-                                <span class="price-prefix">$</span>
-                                <input asp-for="Price"
-                                       id="Price"
-                                       class="form-control-custom price-input"
-                                       type="number"
-                                       min="0" step="0.01"
-                                       placeholder="0.00" />
+                                <span class="price-prefix">₺</span>
+                                <input asp-for="Price" id="Price" class="form-control-custom price-input"
+                                       type="number" min="0" step="0.01" placeholder="0.00" />
                             </div>
                             <p class="field-hint"><i class="bi bi-info-circle"></i> Kişi başı tur ücreti</p>
-                            <span asp-validation-for="Price" class="validation-msg" style="display:block;"></span>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-            <!-- ── Kapak Görseli ───────────────────────────────────── -->
+            <!-- Kapak Görseli -->
             <div class="form-card">
                 <div class="form-card-header">
-                    <div class="form-card-icon fci-yellow">
-                        <i class="bi bi-image-fill"></i>
-                    </div>
+                    <div class="form-card-icon fci-lime"><i class="bi bi-image-fill"></i></div>
                     <div>
                         <p class="form-card-title">Kapak Görseli</p>
                         <p class="form-card-subtitle">Turun vitrin fotoğrafı</p>
                     </div>
                 </div>
                 <div class="form-card-body">
-
-                    <!-- Önizleme -->
                     <div class="image-preview-box" id="imagePreviewBox">
                         <img id="imagePreview" src="" alt="Görsel önizleme" />
                         <div class="preview-placeholder">
@@ -941,33 +876,21 @@
                             <span>Görsel önizlemesi burada görünecek</span>
                         </div>
                     </div>
-
-                    <!-- URL -->
-                    <label class="form-label-custom" for="CoverImageUrl">
-                        Görsel URL <span class="required">*</span>
-                    </label>
+                    <label class="form-label-custom" for="CoverImageUrl">Görsel URL <span class="required">*</span></label>
                     <div class="input-wrapper">
                         <i class="bi bi-link-45deg input-icon"></i>
-                        <input asp-for="CoverImageUrl"
-                               id="CoverImageUrl"
-                               class="form-control-custom with-icon"
-                               placeholder="https://example.com/image.jpg"
-                               autocomplete="off" />
+                        <input asp-for="CoverImageUrl" id="CoverImageUrl" class="form-control-custom with-icon"
+                               placeholder="https://example.com/image.jpg" autocomplete="off" />
                     </div>
-                    <p class="field-hint">
-                        <i class="bi bi-info-circle"></i>
-                        Geçerli bir görsel URL'i girin. Önerilen boyut: 1200×800px
-                    </p>
+                    <p class="field-hint"><i class="bi bi-info-circle"></i> Geçerli bir görsel URL'i girin. Önerilen boyut: 1200×800px</p>
                     <span asp-validation-for="CoverImageUrl" class="validation-msg" style="display:block;"></span>
-
                 </div>
             </div>
+        </div>
 
-        </div><!-- /left column -->
         <!-- ══ RIGHT COLUMN ═══════════════════════════════════════════ -->
         <div>
-
-            <!-- ── Form Dolum Durumu ───────────────────────────────── -->
+            <!-- Progress -->
             <div class="form-progress">
                 <div class="progress-title">
                     <span>Form Tamamlama</span>
@@ -978,12 +901,10 @@
                 </div>
             </div>
 
-            <!-- ── Rozet ──────────────────────────────────────────── -->
+            <!-- Rozet -->
             <div class="form-card">
                 <div class="form-card-header">
-                    <div class="form-card-icon fci-green">
-                        <i class="bi bi-award-fill"></i>
-                    </div>
+                    <div class="form-card-icon fci-green"><i class="bi bi-award-fill"></i></div>
                     <div>
                         <p class="form-card-title">Tur Rozeti</p>
                         <p class="form-card-subtitle">Öne çıkarma etiketi</p>
@@ -991,50 +912,30 @@
                 </div>
                 <div class="form-card-body">
                     <div class="badge-selector">
-
                         <div class="badge-option">
                             <input type="radio" asp-for="Badge" value="" id="badge-none" checked />
-                            <label for="badge-none">
-                                <span class="badge-dot bd-none"></span>
-                                Yok
-                            </label>
+                            <label for="badge-none"><span class="badge-dot bd-none"></span>Yok</label>
                         </div>
-
                         <div class="badge-option">
                             <input type="radio" asp-for="Badge" value="Popular" id="badge-popular" />
-                            <label for="badge-popular">
-                                <span class="badge-dot bd-popular"></span>
-                                Popüler
-                            </label>
+                            <label for="badge-popular"><span class="badge-dot bd-popular"></span>Popüler</label>
                         </div>
-
                         <div class="badge-option">
                             <input type="radio" asp-for="Badge" value="New" id="badge-new" />
-                            <label for="badge-new">
-                                <span class="badge-dot bd-new"></span>
-                                Yeni
-                            </label>
+                            <label for="badge-new"><span class="badge-dot bd-new"></span>Yeni</label>
                         </div>
-
                         <div class="badge-option">
                             <input type="radio" asp-for="Badge" value="Limited" id="badge-limited" />
-                            <label for="badge-limited">
-                                <span class="badge-dot bd-limited"></span>
-                                Sınırlı
-                            </label>
+                            <label for="badge-limited"><span class="badge-dot bd-limited"></span>Sınırlı</label>
                         </div>
-
                     </div>
-                    <span asp-validation-for="Badge" class="validation-msg" style="display:block; margin-top:8px;"></span>
                 </div>
             </div>
 
-            <!-- ── Yayın Durumu ────────────────────────────────────── -->
+            <!-- Yayın Durumu -->
             <div class="form-card">
                 <div class="form-card-header">
-                    <div class="form-card-icon fci-green">
-                        <i class="bi bi-toggle2-on"></i>
-                    </div>
+                    <div class="form-card-icon fci-emerald"><i class="bi bi-toggle2-on"></i></div>
                     <div>
                         <p class="form-card-title">Yayın Durumu</p>
                         <p class="form-card-subtitle">Tur aktif / pasif ayarı</p>
@@ -1043,64 +944,41 @@
                 <div class="form-card-body">
                     <label class="status-toggle-wrap" for="IsStatus">
                         <div class="status-toggle-info">
-                            <div class="status-icon" id="statusIcon">
-                                <i class="bi bi-eye-slash-fill" id="statusIconInner"></i>
-                            </div>
+                            <div class="status-icon"><i class="bi bi-eye-slash-fill" id="statusIconInner"></i></div>
                             <div>
                                 <div class="status-label-title" id="statusLabelTitle">Pasif</div>
                                 <div class="status-label-sub" id="statusLabelSub">Tur listede görünmeyecek</div>
                             </div>
                         </div>
                         <div class="toggle-switch">
-                            <input asp-for="IsStatus" id="IsStatus" type="checkbox"
-                                   onchange="updateStatusLabel(this)" />
+                            <input asp-for="IsStatus" id="IsStatus" type="checkbox" onchange="updateStatusLabel(this)" />
                             <div class="toggle-track"></div>
                         </div>
                     </label>
-                    <span asp-validation-for="IsStatus" class="validation-msg" style="display:block; margin-top:8px;"></span>
                 </div>
             </div>
 
-            <!-- ── Kaydet / İptal ─────────────────────────────────── -->
+            <!-- Kaydet -->
             <div class="submit-card">
                 <button type="submit" class="btn-submit" id="submitBtn">
                     <i class="bi bi-check-circle-fill"></i>
                     Turu Kaydet
                 </button>
-                <a href="/admin/tours" class="btn-cancel-submit">
+                <a href="/AdminTour/TourList" class="btn-cancel-submit">
                     <i class="bi bi-x-circle me-1"></i> İptal Et
                 </a>
             </div>
 
-            <!-- ── İpuçları ───────────────────────────────────────── -->
+            <!-- Tips -->
             <div class="tips-card">
-                <div class="tips-title">
-                    <i class="bi bi-lightbulb-fill"></i>
-                    Başarılı Tur İpuçları
-                </div>
-                <div class="tip-item">
-                    <i class="bi bi-check2-circle"></i>
-                    <span>Tur adını kısa, akılda kalıcı ve ilgi çekici tutun.</span>
-                </div>
-                <div class="tip-item">
-                    <i class="bi bi-check2-circle"></i>
-                    <span>Yüksek çözünürlüklü, yatay formatlı görseller daha iyi görünür.</span>
-                </div>
-                <div class="tip-item">
-                    <i class="bi bi-check2-circle"></i>
-                    <span>"Popüler" rozetini çok satılan turlara verin.</span>
-                </div>
-                <div class="tip-item">
-                    <i class="bi bi-check2-circle"></i>
-                    <span>Fiyatı rekabetçi tutmak rezervasyon oranını artırır.</span>
-                </div>
-                <div class="tip-item">
-                    <i class="bi bi-check2-circle"></i>
-                    <span>Turu kaydetmeden önce tüm bilgileri kontrol edin.</span>
-                </div>
+                <div class="tips-title"><i class="bi bi-lightbulb-fill"></i>Başarılı Tur İpuçları</div>
+                <div class="tip-item"><i class="bi bi-check2-circle"></i><span>Tur adını kısa, akılda kalıcı ve ilgi çekici tutun.</span></div>
+                <div class="tip-item"><i class="bi bi-check2-circle"></i><span>Yüksek çözünürlüklü, yatay formatlı görseller daha iyi görünür.</span></div>
+                <div class="tip-item"><i class="bi bi-check2-circle"></i><span>"Popüler" rozetini çok satılan turlara verin.</span></div>
+                <div class="tip-item"><i class="bi bi-check2-circle"></i><span>Fiyatı rekabetçi tutmak rezervasyon oranını artırır.</span></div>
+                <div class="tip-item"><i class="bi bi-check2-circle"></i><span>Turu kaydetmeden önce tüm bilgileri kontrol edin.</span></div>
             </div>
-
-        </div><!-- /right column -->
+        </div>
     </div>
 </form>
 
@@ -1109,28 +987,23 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-        // ── Character counters ─────────────────────────────────────────────
         function setupCounter(inputId, counterId, max) {
-            const input   = document.getElementById(inputId);
+            const input = document.getElementById(inputId);
             const counter = document.getElementById(counterId);
             if (!input || !counter) return;
-
             function update() {
                 const len = input.value.length;
                 counter.textContent = len + ' / ' + max;
                 counter.className = 'char-counter';
                 if (len > max * 0.9) counter.classList.add('warn');
-                if (len >= max)      counter.classList.add('limit');
+                if (len >= max) counter.classList.add('limit');
             }
-
             input.addEventListener('input', update);
             update();
         }
+        setupCounter('Title', 'titleCounter', 100);
+        setupCounter('Description', 'descCounter', 500);
 
-        setupCounter('Title',       'titleCounter', 100);
-        setupCounter('Description', 'descCounter',  500);
-
-        // ── Number stepper ─────────────────────────────────────────────────
         function stepValue(id, delta, min, max) {
             const input = document.getElementById(id);
             let val = parseInt(input.value) || 0;
@@ -1139,127 +1012,62 @@
             updateProgress();
         }
 
-        // ── Image preview ──────────────────────────────────────────────────
-        const coverInput   = document.getElementById('CoverImageUrl');
-        const previewBox   = document.getElementById('imagePreviewBox');
-        const previewImg   = document.getElementById('imagePreview');
-
+        const coverInput = document.getElementById('CoverImageUrl');
+        const previewBox = document.getElementById('imagePreviewBox');
+        const previewImg = document.getElementById('imagePreview');
         let previewTimeout;
-
         coverInput.addEventListener('input', () => {
             clearTimeout(previewTimeout);
             previewTimeout = setTimeout(() => {
                 const url = coverInput.value.trim();
-                if (!url) {
-                    previewBox.classList.remove('has-image');
-                    previewImg.classList.remove('loaded');
-                    return;
-                }
-                previewImg.onload = () => {
-                    previewBox.classList.add('has-image');
-                    previewImg.classList.add('loaded');
-                };
-                previewImg.onerror = () => {
-                    previewBox.classList.remove('has-image');
-                    previewImg.classList.remove('loaded');
-                };
+                if (!url) { previewBox.classList.remove('has-image'); previewImg.classList.remove('loaded'); return; }
+                previewImg.onload  = () => { previewBox.classList.add('has-image'); previewImg.classList.add('loaded'); };
+                previewImg.onerror = () => { previewBox.classList.remove('has-image'); previewImg.classList.remove('loaded'); };
                 previewImg.src = url;
             }, 600);
         });
 
-        // ── Status label ───────────────────────────────────────────────────
         function updateStatusLabel(cb) {
-            const title   = document.getElementById('statusLabelTitle');
-            const sub     = document.getElementById('statusLabelSub');
-            const icon    = document.getElementById('statusIconInner');
-
-            if (cb.checked) {
-                title.textContent = 'Aktif';
-                sub.textContent   = 'Tur listede görünecek';
-                icon.className    = 'bi bi-eye-fill';
-            } else {
-                title.textContent = 'Pasif';
-                sub.textContent   = 'Tur listede görünmeyecek';
-                icon.className    = 'bi bi-eye-slash-fill';
-            }
+            document.getElementById('statusLabelTitle').textContent = cb.checked ? 'Aktif' : 'Pasif';
+            document.getElementById('statusLabelSub').textContent   = cb.checked ? 'Tur listede görünecek' : 'Tur listede görünmeyecek';
+            document.getElementById('statusIconInner').className    = cb.checked ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
         }
 
-        // ── Form progress ──────────────────────────────────────────────────
-        const progressBar   = document.getElementById('formProgressBar');
-        const progressPct   = document.getElementById('progressPercent');
-
-        const trackedFields = [
-            'Title', 'Description', 'CoverImageUrl', 'Price'
-        ];
-
+        const trackedFields = ['Title', 'Description', 'CoverImageUrl', 'Price'];
         function updateProgress() {
             let filled = 0;
-            const total = trackedFields.length + 2; // +DayCount +Capacity (always have value)
-
-            trackedFields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && el.value.trim().length > 0) filled++;
-            });
-
-            // DayCount and Capacity always count as filled since they have default values
-            const dayCount = parseInt(document.getElementById('DayCount').value) || 0;
-            const capacity = parseInt(document.getElementById('Capacity').value) || 0;
-            if (dayCount >= 1) filled++;
-            if (capacity >= 1) filled++;
-
+            const total = trackedFields.length + 2;
+            trackedFields.forEach(id => { const el = document.getElementById(id); if (el && el.value.trim().length > 0) filled++; });
+            if ((parseInt(document.getElementById('DayCount').value) || 0) >= 1) filled++;
+            if ((parseInt(document.getElementById('Capacity').value) || 0) >= 1) filled++;
             const pct = Math.round((filled / total) * 100);
-            progressBar.style.width = pct + '%';
-            progressPct.textContent = pct + '%';
+            document.getElementById('formProgressBar').style.width = pct + '%';
+            document.getElementById('progressPercent').textContent = pct + '%';
         }
-
-        trackedFields.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('input', updateProgress);
-        });
-
+        trackedFields.forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', updateProgress); });
         document.getElementById('DayCount').addEventListener('input', updateProgress);
         document.getElementById('Capacity').addEventListener('input', updateProgress);
-
         updateProgress();
 
-        // ── Client-side validation highlight ──────────────────────────────
         document.getElementById('createTourForm').addEventListener('submit', function (e) {
             let valid = true;
-
             trackedFields.forEach(id => {
                 const el = document.getElementById(id);
-                if (el && !el.value.trim()) {
-                    el.classList.add('is-invalid');
-                    valid = false;
-                } else if (el) {
-                    el.classList.remove('is-invalid');
-                }
+                if (el && !el.value.trim()) { el.classList.add('is-invalid'); valid = false; }
+                else if (el) el.classList.remove('is-invalid');
             });
-
             const price = parseFloat(document.getElementById('Price').value);
-            const priceEl = document.getElementById('Price');
-            if (isNaN(price) || price <= 0) {
-                priceEl.classList.add('is-invalid');
-                valid = false;
-            }
-
-            if (!valid) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
+            if (isNaN(price) || price <= 0) { document.getElementById('Price').classList.add('is-invalid'); valid = false; }
+            if (!valid) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            else {
                 const btn = document.getElementById('submitBtn');
                 btn.disabled = true;
-                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Kaydediliyor…';
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Kaydediliyor…';
             }
         });
 
-        // Remove invalid class on input
         document.querySelectorAll('.form-control-custom').forEach(el => {
             el.addEventListener('input', () => el.classList.remove('is-invalid'));
         });
     </script>
 }
-
-
-
-

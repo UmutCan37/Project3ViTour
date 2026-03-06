@@ -11,5 +11,8 @@
         public int Capacity { get; set; }
         public decimal Price { get; set; }
         public bool IsStatus { get; set; }
+
+        public string LocationId { get; set; }
+        
     }
 }

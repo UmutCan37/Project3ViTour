@@ -1,4 +1,6 @@
-﻿<footer class="footer footer-style1">
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<Project3ViTour.Resources.SharedResource> L
+
+<footer class="footer footer-style1">
     <div class="tf-container">
         <div class="footer-main">
             <div class="footer-logo">
@@ -6,7 +8,7 @@
                     <img src="/vitour/assets/images/logo2.png" alt="">
                 </div>
                 <p class="des-footer">
-                    Dünyayı keşfetmeniz için güvenli, konforlu ve profesyonel tur hizmetleri sunuyoruz.
+                    @L["Footer_Description"]
                 </p>
                 <ul class="footer-info">
                     <li class="flex-three">
@@ -22,32 +24,21 @@
                         <p>Bağdat Caddesi No:123 Kadıköy / İstanbul</p>
                     </li>
                 </ul>
-
             </div>
-            <div class="footer-service">
-                <h5 class="title">Kurumsal</h5>
 
+            <div class="footer-service">
+                <h5 class="title">@L["Footer_Corporate"]</h5>
                 <ul class="footer-menu">
-                    <li>
-                        <a href="about-us.html">Hakkımızda</a>
-                    </li>
-                    <li>
-                        <a href="gallery.html">Galeri</a>
-                    </li>
-                    <li>
-                        <a href="team.html">Ekibimiz</a>
-                    </li>
-                    <li>
-                        <a href="blog.html">Blog Yazıları</a>
-                    </li>
-                    <li>
-                        <a href="contact-us.html">İletişim</a>
-                    </li>
+                    <li><a href="about-us.html">@L["Footer_About"]</a></li>
+                    <li><a href="gallery.html">@L["Footer_Gallery"]</a></li>
+                    <li><a href="team.html">@L["Footer_Team"]</a></li>
+                    <li><a href="blog.html">@L["Footer_Blog"]</a></li>
+                    <li><a href="contact-us.html">@L["Footer_Contact"]</a></li>
                 </ul>
             </div>
-            <div class="footer-gallery">
-                <h5 class="title">Galeri</h5>
 
+            <div class="footer-gallery">
+                <h5 class="title">@L["Footer_Gallery"]</h5>
                 <div class="gallery-img">
                     <a href="/vitour/assets/images/gallery/gl1.jpg" data-fancybox="gallery">
                         <img src="/vitour/assets/images/gallery/gl1.jpg" alt="image gallery">
@@ -68,72 +59,39 @@
                         <img src="/vitour/assets/images/gallery/gl6.jpg" alt="image gallery">
                     </a>
                 </div>
-
             </div>
+
             <div class="footer-newsletter">
-                <h5 class="title">Bülten Aboneliği</h5>
+                <h5 class="title">@L["Footer_Newsletter"]</h5>
                 <form action="/" id="footer-form">
                     <div class="input-wrap flex-three">
-                        <input type="email" placeholder="E-posta Adresinizi Giriniz">
+                        <input type="email" placeholder="@L["Footer_EmailPlaceholder"]">
                         <button type="submit"><i class="icon-paper-plane"></i></button>
                     </div>
                     <div class="check-form flex-three">
                         <i class="icon-Vector-121"></i>
-                        <p>Tüm şartlar ve gizlilik politikamızı kabul ediyorum</p>
+                        <p>@L["Footer_TermsAccept"]</p>
                     </div>
                 </form>
                 <ul class="social-ft flex-three">
-                    <li>
-                        <a href="#">
-                            <i class="icon-icon-2"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-x"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-8"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-2"></i>
-                        </a>
-                    </li>
+                    <li><a href="#"><i class="icon-icon-2"></i></a></li>
+                    <li><a href="#"><i class="icon-x"></i></a></li>
+                    <li><a href="#"><i class="icon-8"></i></a></li>
+                    <li><a href="#"><i class="icon-2"></i></a></li>
                 </ul>
-
             </div>
         </div>
 
         <div class="row footer-bottom">
             <div class="col-md-6">
-                <p class="copy-right">Copyright © @DateTime.Now.Year by Themesflat. Tüm hakları saklıdır.</p>
+                <p class="copy-right">Copyright © @DateTime.Now.Year by Vitour. @L["Footer_Copyright"]</p>
             </div>
             <div class="col-md-6">
                 <ul class="social flex-six">
-                    <li>
-                        <a href="#">
-                            <i class="icon-icon-2"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-x"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-icon_03"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-2"></i>
-                        </a>
-                    </li>
+                    <li><a href="#"><i class="icon-icon-2"></i></a></li>
+                    <li><a href="#"><i class="icon-x"></i></a></li>
+                    <li><a href="#"><i class="icon-icon_03"></i></a></li>
+                    <li><a href="#"><i class="icon-2"></i></a></li>
                 </ul>
             </div>
         </div>

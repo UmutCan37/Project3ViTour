@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+	</resheader>
+
+	<data name="Nav_Home" xml:space="preserve"><value>Accueil</value></data>
+	<data name="Nav_CultureTours" xml:space="preserve"><value>Tours Culturels</value></data>
+	<data name="Nav_VisaFreeTours" xml:space="preserve"><value>Tours Sans Visa</value></data>
+	<data name="Nav_CyprusTours" xml:space="preserve"><value>Tours à Chypre</value></data>
+	<data name="Nav_Guides" xml:space="preserve"><value>Nos Guides</value></data>
+	<data name="Nav_Contact" xml:space="preserve"><value>Contactez-nous</value></data>
+	<data name="Nav_Login" xml:space="preserve"><value>Se Connecter</value></data>
+	<data name="Nav_Booking" xml:space="preserve"><value>Réservation</value></data>
+	<data name="Nav_Follow" xml:space="preserve"><value>Suivez-nous</value></data>
+	<data name="Nav_Search" xml:space="preserve"><value>Rechercher...</value></data>
+	<data name="Footer_Description" xml:space="preserve"><value>Nous proposons des services touristiques sûrs, confortables et professionnels pour explorer le monde.</value></data>
+	<data name="Footer_Corporate" xml:space="preserve"><value>Entreprise</value></data>
+	<data name="Footer_About" xml:space="preserve"><value>À propos</value></data>
+	<data name="Footer_Gallery" xml:space="preserve"><value>Galerie</value></data>
+	<data name="Footer_Team" xml:space="preserve"><value>Notre Équipe</value></data>
+	<data name="Footer_Blog" xml:space="preserve"><value>Articles de Blog</value></data>
+	<data name="Footer_Contact" xml:space="preserve"><value>Contact</value></data>
+	<data name="Footer_Newsletter" xml:space="preserve"><value>Newsletter</value></data>
+	<data name="Footer_EmailPlaceholder" xml:space="preserve"><value>Entrez votre adresse e-mail</value></data>
+	<data name="Footer_TermsAccept" xml:space="preserve"><value>J'accepte toutes les conditions et la politique de confidentialité</value></data>
+	<data name="Footer_Copyright" xml:space="preserve"><value>Tous droits réservés.</value></data>
+	<data name="Breadcrumb_Home" xml:space="preserve"><value>Accueil</value></data>
+	<data name="Breadcrumb_Tours" xml:space="preserve"><value>Tours Actuels</value></data>
+	<data name="Breadcrumb_TourPackages" xml:space="preserve"><value>Forfaits de Tours</value></data>
+	<data name="Search_Locations" xml:space="preserve"><value>Destinations</value></data>
+	<data name="Search_Type" xml:space="preserve"><value>Type de Tour</value></data>
+	<data name="Search_Duration" xml:space="preserve"><value>Durée</value></data>
+	<data name="Search_Guests" xml:space="preserve"><value>Voyageurs</value></data>
+	<data name="Search_Button" xml:space="preserve"><value>Rechercher</value></data>
+	<data name="Search_FilterByPrice" xml:space="preserve"><value>Filtrer par Prix</value></data>
+	<data name="Search_Price" xml:space="preserve"><value>Prix</value></data>
+	<data name="Search_Language" xml:space="preserve"><value>Langue</value></data>
+	<data name="Search_Month" xml:space="preserve"><value>Mois</value></data>
+	<data name="Search_AcceptsCards" xml:space="preserve"><value>Cartes Acceptées</value></data>
+	<data name="Search_CarParking" xml:space="preserve"><value>Parking</value></data>
+	<data name="Search_FreeCoupons" xml:space="preserve"><value>Coupons Gratuits</value></data>
+	<data name="Search_Laundry" xml:space="preserve"><value>Service de Blanchisserie</value></data>
+	<data name="Search_OutdoorSeating" xml:space="preserve"><value>Terrasse</value></data>
+	<data name="Search_Reservations" xml:space="preserve"><value>Réservations</value></data>
+	<data name="Search_Restaurant" xml:space="preserve"><value>Restaurant</value></data>
+	<data name="Search_Smoking" xml:space="preserve"><value>Fumeurs Autorisés</value></data>
+	<data name="TourList_Showing" xml:space="preserve"><value>Affichage</value></data>
+	<data name="TourList_Results" xml:space="preserve"><value>Résultats</value></data>
+	<data name="TourList_Featured" xml:space="preserve"><value>En Vedette</value></data>
+	<data name="TourList_Reviews" xml:space="preserve"><value>Avis</value></data>
+	<data name="TourList_Price" xml:space="preserve"><value>Prix</value></data>
+	<data name="Detail_Information" xml:space="preserve"><value>Informations</value></data>
+	<data name="Detail_TourPlanning" xml:space="preserve"><value>Planning du Tour</value></data>
+	<data name="Detail_Location" xml:space="preserve"><value>Lieu</value></data>
+	<data name="Detail_Reviews" xml:space="preserve"><value>Avis</value></data>
+	<data name="Detail_Gallery" xml:space="preserve"><value>Galerie Photos</value></data>
+	<data name="Detail_MaxGuests" xml:space="preserve"><value>Max. Voyageurs</value></data>
+	<data name="Detail_Days" xml:space="preserve"><value>Jours</value></data>
+	<data name="Detail_BookTour" xml:space="preserve"><value>Réserver ce Tour</value></data>
+	<data name="Detail_ProceedBooking" xml:space="preserve"><value>Continuer la Réservation</value></data>
+	<data name="Detail_BookWithConfidence" xml:space="preserve"><value>Réservez en Toute Confiance</value></data>
+	<data name="Detail_CustomerCare" xml:space="preserve"><value>Service client disponible 24h/24</value></data>
+	<data name="Detail_HandpickedTours" xml:space="preserve"><value>Tours &amp; Activités Sélectionnés</value></data>
+	<data name="Detail_FreeInsurance" xml:space="preserve"><value>Assurance Voyage Gratuite</value></data>
+	<data name="Detail_BestPrice" xml:space="preserve"><value>Meilleur Prix Garanti</value></data>
+	<data name="Detail_Description" xml:space="preserve"><value>Description</value></data>
+	<data name="Detail_TourPlan" xml:space="preserve"><value>Plan du Tour</value></data>
+	<data name="Detail_LeaveComment" xml:space="preserve"><value>Laisser un Commentaire</value></data>
+	<data name="Detail_PostComment" xml:space="preserve"><value>Publier le Commentaire</value></data>
+	<data name="Detail_CustomerReviews" xml:space="preserve"><value>Avis des Clients</value></data>
+	<data name="Detail_ClientReviews" xml:space="preserve"><value>Commentaires Clients</value></data>
+	<data name="Detail_OverallRating" xml:space="preserve"><value>Note Globale</value></data>
+	<data name="Detail_OutOf5" xml:space="preserve"><value>Sur 5</value></data>
+	<data name="Booking_Title" xml:space="preserve"><value>Réservez Votre Tour</value></data>
+	<data name="Booking_Subtitle" xml:space="preserve"><value>Remplissez le formulaire ci-dessous pour finaliser votre réservation.</value></data>
+	<data name="Booking_SelectTour" xml:space="preserve"><value>Sélectionner un Tour</value></data>
+	<data name="Booking_SelectTourPlaceholder" xml:space="preserve"><value>-- Choisir un Tour --</value></data>
+	<data name="Booking_NameSurname" xml:space="preserve"><value>Nom Complet</value></data>
+	<data name="Booking_Email" xml:space="preserve"><value>E-mail</value></data>
+	<data name="Booking_Phone" xml:space="preserve"><value>Téléphone</value></data>
+	<data name="Booking_GuestCount" xml:space="preserve"><value>Nombre de Voyageurs</value></data>
+	<data name="Booking_Date" xml:space="preserve"><value>Date du Tour</value></data>
+	<data name="Booking_Notes" xml:space="preserve"><value>Notes</value></data>
+	<data name="Booking_TermsAccept" xml:space="preserve"><value>J'accepte les Conditions d'Utilisation et la Politique de Confidentialité.</value></data>
+	<data name="Booking_Submit" xml:space="preserve"><value>Finaliser la Réservation</value></data>
+	<data name="Booking_CancelPolicy" xml:space="preserve"><value>Politique d'Annulation</value></data>
+	<data name="Booking_PricePerPerson" xml:space="preserve"><value>Prix par Personne</value></data>
+	<data name="Booking_Total" xml:space="preserve"><value>Montant Total</value></data>
+	<data name="Detail_AdvancedFeatures" xml:space="preserve"><value>Caractéristiques Avancées</value></data>
+	<data name="Detail_AdvancedFeaturesText" xml:space="preserve"><value>Laissez vos guides à la maison et plongez dans les cultures locales qui rendent chaque destination si spéciale.</value></data>
+	<data name="Detail_WhatToExpect" xml:space="preserve"><value>À Quoi S'attendre</value></data>
+	<data name="Detail_WhatToExpectText" xml:space="preserve"><value>Laissez vos guides à la maison et plongez dans les cultures locales qui rendent chaque destination si spéciale.</value></data>
+	<data name="Detail_Expect1" xml:space="preserve"><value>Voir les Remparts de la Ville</value></data>
+	<data name="Detail_Expect2" xml:space="preserve"><value>Randonnée en Forêt</value></data>
+	<data name="Detail_Expect3" xml:space="preserve"><value>Découvrir le célèbre point de vue "The Lark"</value></data>
+	<data name="Detail_Expect4" xml:space="preserve"><value>Coucher de soleil en croisière</value></data>
+	<data name="Detail_TripDetails" xml:space="preserve"><value>Détails du Voyage</value></data>
+	<data name="Detail_DepartureReturn" xml:space="preserve"><value>Point de Départ/Retour</value></data>
+	<data name="Detail_DepartureTime" xml:space="preserve"><value>Heure de Départ</value></data>
+	<data name="Detail_DepartureTimeText" xml:space="preserve"><value>Veuillez arriver avant 09h15, départ à 09h30</value></data>
+	<data name="Detail_ReturnTime" xml:space="preserve"><value>Heure de Retour</value></data>
+	<data name="Detail_ReturnTimeText" xml:space="preserve"><value>Environ 20h30</value></data>
+	<data name="Detail_IncludedExcluded" xml:space="preserve"><value>Inclus / Exclus</value></data>
+	<data name="Detail_Include1" xml:space="preserve"><value>Service de Transfert</value></data>
+	<data name="Detail_Include2" xml:space="preserve"><value>1 Repas par Jour</value></data>
+	<data name="Detail_Include3" xml:space="preserve"><value>Dîner en Bateau &amp; Événement Musical</value></data>
+	<data name="Detail_Include4" xml:space="preserve"><value>Visite des 7 Meilleurs Endroits en Groupe</value></data>
+	<data name="Detail_TourAmenities" xml:space="preserve"><value>Équipements du Tour</value></data>
+	<data name="Detail_Amenity1" xml:space="preserve"><value>Climatisation</value></data>
+	<data name="Detail_Amenity2" xml:space="preserve"><value>Micro-ondes</value></data>
+	<data name="Detail_Amenity3" xml:space="preserve"><value>Chauffage Central</value></data>
+	<data name="Detail_Amenity4" xml:space="preserve"><value>Blanchisserie</value></data>
+	<data name="Detail_Amenity5" xml:space="preserve"><value>Douche Extérieure</value></data>
+	<data name="Detail_Amenity6" xml:space="preserve"><value>Piscine</value></data>
+	<data name="Detail_Amenity7" xml:space="preserve"><value>Système de Rideaux</value></data>
+	<data name="Detail_Amenity8" xml:space="preserve"><value>Réfrigérateur</value></data>
+	<data name="Detail_Amenity9" xml:space="preserve"><value>Système d'Alarme</value></data>
+	<data name="Detail_Time" xml:space="preserve"><value>Heure</value></data>
+</root>

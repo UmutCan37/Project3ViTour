@@ -1,0 +1,496 @@
+﻿@model List<Project3ViTour.Dtos.CategoryDtos.ResultCategoryDto>
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "~/Views/Shared/_TourLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --green: #2ecc71;
+            --green-dk: #27ae60;
+            --green-lt: #eafaf1;
+            --green-mid: #d5f5e3;
+            --green-glow: rgba(46,204,113,.18);
+            --surface: #f7fdf9;
+            --border: #e3f2e9;
+            --text-main: #1a2e1a;
+            --text-muted: #7a9c7a;
+            --danger: #ef4444;
+            --white: #ffffff;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .page-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--green-dk);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .page-eyebrow::before {
+                content: '';
+                display: inline-block;
+                width: 18px;
+                height: 2px;
+                background: var(--green);
+                border-radius: 2px;
+            }
+
+        .page-title {
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            color: #1a2e1a;
+        }
+
+        .btn-add {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--green), var(--green-dk));
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all .2s;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(46,204,113,.35);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-add:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(46,204,113,.45);
+                color: #fff;
+            }
+
+        /* Stats */
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+            box-shadow: 0 2px 8px rgba(46,204,113,.07);
+        }
+
+            .stat-pill i {
+                color: var(--green);
+            }
+
+            .stat-pill strong {
+                color: #1a2e1a;
+            }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: 0 2px 12px rgba(46,204,113,.06);
+        }
+
+        .filter-search {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+            max-width: 360px;
+        }
+
+            .filter-search i {
+                position: absolute;
+                left: 13px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                font-size: 14px;
+                pointer-events: none;
+            }
+
+            .filter-search input {
+                width: 100%;
+                padding: 10px 14px 10px 38px;
+                border: 1.5px solid var(--border);
+                border-radius: 10px;
+                background: var(--surface);
+                font-size: 13.5px;
+                color: var(--text-main);
+                outline: none;
+                transition: all .15s;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+
+                .filter-search input:focus {
+                    border-color: var(--green);
+                    box-shadow: 0 0 0 3px var(--green-glow);
+                    background: #fff;
+                }
+
+        /* Table */
+        .table-card {
+            background: var(--white);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(46,204,113,.08);
+            overflow: hidden;
+            border: 1.5px solid var(--border);
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .cat-table thead th {
+                background: linear-gradient(135deg, var(--green-lt), #f0fff4);
+                padding: 14px 20px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: var(--text-muted);
+                border-bottom: 1.5px solid var(--border);
+            }
+
+            .cat-table tbody tr {
+                border-bottom: 1px solid #f0fdf4;
+                transition: background .14s;
+            }
+
+                .cat-table tbody tr:last-child {
+                    border-bottom: none;
+                }
+
+                .cat-table tbody tr:hover {
+                    background: #f7fdf9;
+                }
+
+            .cat-table td {
+                padding: 14px 20px;
+                vertical-align: middle;
+            }
+
+        /* Category cell */
+        .cat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--green), var(--green-dk));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(46,204,113,.3);
+        }
+
+        .cat-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a2e1a;
+        }
+
+        .row-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: var(--green-lt);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Status */
+        .badge-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: var(--green-mid);
+            color: var(--green-dk);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+            .badge-active::before {
+                content: '';
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--green);
+            }
+
+        .badge-passive {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+            .badge-passive::before {
+                content: '';
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #94a3b8;
+            }
+
+        /* Actions */
+        .action-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+            .btn-action:hover {
+                transform: translateY(-1px);
+            }
+
+        .btn-edit {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+            .btn-edit:hover {
+                background: #fef08a;
+            }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+            .btn-delete:hover {
+                background: #fecaca;
+            }
+
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+        }
+
+        .empty-icon {
+            font-size: 52px;
+            color: var(--green-mid);
+            margin-bottom: 14px;
+        }
+
+        .empty-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            font-family: 'Fraunces', serif;
+        }
+
+        .empty-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        @@keyframes rowSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cat-table tbody tr {
+            animation: rowSlide .3s ease both;
+        }
+
+            .cat-table tbody tr:nth-child(1) {
+                animation-delay: .04s;
+            }
+
+            .cat-table tbody tr:nth-child(2) {
+                animation-delay: .08s;
+            }
+
+            .cat-table tbody tr:nth-child(3) {
+                animation-delay: .12s;
+            }
+
+            .cat-table tbody tr:nth-child(4) {
+                animation-delay: .16s;
+            }
+
+            .cat-table tbody tr:nth-child(5) {
+                animation-delay: .20s;
+            }
+    </style>
+}
+
+<!-- PAGE HEADER -->
+<div class="section-header">
+    <div>
+        <p class="page-eyebrow">Yönetim</p>
+        <h1 class="page-title">Kategoriler</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Dashboard/Index" class="text-muted">Dashboard</a></li>
+                <li class="breadcrumb-item active text-muted">Kategoriler</li>
+            </ol>
+        </nav>
+    </div>
+    <a href="/Category/CreateCategory" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Kategori
+    </a>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <div class="filter-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="tableSearch" placeholder="Kategori ara…" autocomplete="off" />
+    </div>
+    <span class="stat-pill" style="margin-left:auto;">
+        <i class="bi bi-tag-fill"></i>
+        Toplam: <strong id="visibleCount">@(Model?.Count ?? 0)</strong> / <strong>@(Model?.Count ?? 0)</strong>
+    </span>
+</div>
+
+<!-- TABLE -->
+<div class="table-card">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-icon"><i class="bi bi-tags"></i></div>
+            <div class="empty-title">Henüz kategori yok</div>
+            <p class="empty-sub">İlk kategoriyi ekleyerek başlayın.</p>
+            <a href="/Category/CreateCategory" class="btn-add mt-3" style="display:inline-flex;">
+                <i class="bi bi-plus-lg"></i> Kategori Ekle
+            </a>
+        </div>
+    }
+    else
+    {
+        <table class="cat-table" id="categoryTable">
+            <thead>
+                <tr>
+                    <th style="width:50px;">#</th>
+                    <th>Kategori</th>
+                    <th style="width:140px;">Durum</th>
+                    <th style="text-align:right; width:200px;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="categoryBody">
+                @{
+                    int i = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr class="data-row" data-name="@item.CategoryName?.ToLower()">
+                        <td><div class="row-num">@i</div></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="cat-icon"><i class="bi bi-tag-fill"></i></div>
+                                <span class="cat-name">@item.CategoryName</span>
+                            </div>
+                        </td>
+                        <td>
+                            @if (item.CategoryStatus)
+                            {
+                                <span class="badge-active">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge-passive">Pasif</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="action-group">
+                                <a href="/Category/UpdateCategory/@item.CategoryId" class="btn-action btn-edit">
+                                    <i class="bi bi-pencil-fill"></i> Düzenle
+                                </a>
+                                <a href="/Category/DeleteCategory/@item.CategoryId"
+                                   class="btn-action btn-delete"
+                                   onclick="return confirm('Bu kategoriyi silmek istediğine emin misin?')">
+                                    <i class="bi bi-trash3-fill"></i> Sil
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        const searchInput  = document.getElementById('tableSearch');
+        const visibleCount = document.getElementById('visibleCount');
+        const tbody        = document.getElementById('categoryBody');
+
+        searchInput?.addEventListener('input', function () {
+            const q = this.value.toLowerCase().trim();
+            const rows = tbody?.querySelectorAll('tr.data-row') ?? [];
+            let visible = 0;
+            rows.forEach(row => {
+                const match = !q || (row.dataset.name || '').includes(q);
+                row.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            if (visibleCount) visibleCount.textContent = visible;
+        });
+    </script>
+}

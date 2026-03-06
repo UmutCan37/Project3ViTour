@@ -68,7 +68,7 @@ Admin panel tamamen **custom olarak geliştirilmiştir.**
 
 - Tours
 - Categories
-- Destinations
+- Location
 - Reviews
 - Reservations
 
